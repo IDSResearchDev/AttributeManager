@@ -100,6 +100,16 @@
     <Resource Include="Font\Roboto\Roboto-ThinItalic.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Font\Open-sans\OpenSans-Bold.ttf" />
+    <Resource Include="Font\Open-sans\OpenSans-BoldItalic.ttf" />
+    <Resource Include="Font\Open-sans\OpenSans-ExtraBold.ttf" />
+    <Resource Include="Font\Open-sans\OpenSans-ExtraBoldItalic.ttf" />
+    <Resource Include="Font\Open-sans\OpenSans-Italic.ttf" />
+    <Resource Include="Font\Open-sans\OpenSans-Light.ttf" />
+    <Resource Include="Font\Open-sans\OpenSans-LightItalic.ttf" />
+    <Resource Include="Font\Open-sans\OpenSans-Regular.ttf" />
+    <Resource Include="Font\Open-sans\OpenSans-Semibold.ttf" />
+    <Resource Include="Font\Open-sans\OpenSans-SemiboldItalic.ttf" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -149,7 +159,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

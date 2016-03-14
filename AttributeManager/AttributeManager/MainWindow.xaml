@@ -7,6 +7,21 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        
+        <Button Name="BtnCreatePackage"
+                    Width="100"
+                    Height="30"
+                    Margin="0,10,407,279"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Command="{Binding CreatePackage}"
+                    CommandParameter="{Binding}"
+                    Foreground="White"
+                    Style="{StaticResource PrimaryButton}">
+            <Button.Content>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Margin="2" Text="Primary Button" />
+                </StackPanel>
+            </Button.Content>
+        </Button>
     </Grid>
 </Window>

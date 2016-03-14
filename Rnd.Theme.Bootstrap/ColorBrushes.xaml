@@ -9,7 +9,7 @@
     <Color x:Key="PrimaryNormalBackgroundColor"
            A="255"
            B="163"
-           G="108"
+           G="140"
            R="0" />
     <Color x:Key="GlowBlue">#66AFE9</Color>
     <SolidColorBrush x:Key="GlowBlueBrush" Color="{StaticResource GlowBlue}" />
@@ -24,7 +24,7 @@
     <SolidColorBrush x:Key="DisabledBackgroundBrush" Color="#f2f2f2" />
     <SolidColorBrush x:Key="DisabledBorderBrush" Color="#999999" />
     <SolidColorBrush x:Key="DisabledForegroundBrush" Color="#999999" />
-    <SolidColorBrush x:Key="PrimaryNormalBorderBrush" Color="#cccccc" />
+    <SolidColorBrush x:Key="PrimaryNormalBorderBrush" Color="#0079a1" />
     <SolidColorBrush x:Key="PrimaryFocusBorderBrush" Color="#808080" />
     <SolidColorBrush x:Key="PrimaryFocusBackgroundBrush" Color="#006ca3" />
     <SolidColorBrush x:Key="PrimaryHoverBorderBrush" Color="#00599a" />
