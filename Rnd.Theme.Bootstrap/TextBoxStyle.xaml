@@ -8,7 +8,7 @@
     <Style TargetType="TextBox">
         <Setter Property="Background" Value="{StaticResource WhiteBackgroundBrush}" />
         <Setter Property="Foreground" Value="{StaticResource BlackForegroundBrush}" />
-        <Setter Property="MinHeight" Value="27" />
+        <Setter Property="MinHeight" Value="25" />
         <Setter Property="Padding" Value="5 2" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
@@ -26,11 +26,11 @@
                 <ControlTemplate TargetType="{x:Type TextBox}">
                     <!--  Content handles within a border  -->
                     <Border x:Name="border"
-                            Margin="2"
+                            Margin="0"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="0.9"
-                            CornerRadius="3">
+                            CornerRadius="0">
                         <Border.Effect>
                             <DropShadowEffect BlurRadius="5"
                                               Opacity="0"

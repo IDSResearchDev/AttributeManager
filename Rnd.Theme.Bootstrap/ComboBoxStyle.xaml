@@ -33,7 +33,7 @@
                             Background="White"
                             BorderBrush="LightGray"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="3"
+                            CornerRadius="0"
                             SnapsToDevicePixels="true">
                         <Border x:Name="splitBorder"
                                 Width="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}"

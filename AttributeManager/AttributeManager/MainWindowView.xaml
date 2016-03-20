@@ -6,13 +6,15 @@
         xmlns:local="clr-namespace:AttributeManager"
         xmlns:themecatalog="clr-namespace:AttributeManager.ThemeCatalog"
         xmlns:attribsettings="clr-namespace:AttributeManager.AttribSettings"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" 
-        x:Class="AttributeManager.MainWindow"
+        x:Class="AttributeManager.MainWindowView"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525"
-        local:ViewModelLocator.AutoViewModel="True">
-    
+        Title="MainWindowView" Height="249.176" Width="692.067" ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen" AllowsTransparency="True" WindowStyle="None"
+        Style="{StaticResource WindowTextStyle}"
+        local:ViewModelLocator.AutoViewModel="True" MouseDown="Window_MouseDown">
+
     <Window.Resources>
         <DataTemplate DataType="{x:Type themecatalog:ThemeCatalogViewModel}">
             <themecatalog:ThemeCatalogView/>
@@ -25,26 +27,24 @@
     <!--<Window.DataContext>
         <local:MainViewModel/>
     </Window.DataContext>-->
-    
-	<i:Interaction.Triggers>
-		<i:EventTrigger EventName="Loaded">
-            <ei:CallMethodAction TargetObject="{Binding}" MethodName="LoadThemeCatalog"/>
-		</i:EventTrigger>
-	</i:Interaction.Triggers>
-    
-	<Grid >
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="*"/>
-            
-		</Grid.RowDefinitions>
-		<Grid x:Name="Navbar">
-			
-		</Grid>
-            <Grid x:Name="MainContetxt" Grid.Row="1"> 
-			<ContentControl Content="{Binding CurrentViewModel}"/>
-		</Grid>
-        
-	</Grid>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <ei:CallMethodAction TargetObject="{Binding}" MethodName="LoadCurrentView"/>
+        </i:EventTrigger>
+
+    </i:Interaction.Triggers>
+
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="MainContetxt" Grid.Row="1">
+            <ContentControl Content="{Binding CurrentViewModel}"/>
+
+        </Grid>
+    </Grid>
 
 </Window>
