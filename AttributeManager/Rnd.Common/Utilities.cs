@@ -65,11 +65,25 @@ namespace Rnd.Common
         /// <returns>
         ///     returns object which is a dialog result and string full folder path of selected file.
         /// </returns>
-        public Tuple<DialogResult, string> FileDialog()
+        public Tuple<DialogResult,string> FileDialog(string title)
         {
             var fileDialog = new OpenFileDialog();
-            fileDialog.ShowDialog();
-            return new Tuple<DialogResult, string>(fileDialog.ShowDialog(), fileDialog.FileName);
+
+            fileDialog.InitialDirectory = @"C:\";
+            fileDialog.Title = title;
+
+            fileDialog.CheckFileExists = true;
+            fileDialog.CheckPathExists = true;
+
+            //fileDialog.DefaultExt = "txt";
+            fileDialog.Filter = "All files (*.*)|*.*";
+            //fileDialog.FilterIndex = 2;
+            fileDialog.RestoreDirectory = true;
+
+            fileDialog.ReadOnlyChecked = true;
+            fileDialog.ShowReadOnly = true;
+            
+            return new Tuple<DialogResult, string>(fileDialog.ShowDialog(), fileDialog.FileName.ToString());
         }
 
         /// <summary>

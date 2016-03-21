@@ -38,8 +38,8 @@ namespace AttributeManager
             var viewModelType = Type.GetType(viewModelTypeName);
             var viewModel = Activator.CreateInstance(viewModelType);
             ((FrameworkElement)d).DataContext = viewModel;
-
         }
+
 
     }
 }

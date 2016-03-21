@@ -87,30 +87,31 @@
     <Compile Include="AttribSettings\AttribSettingsView.xaml.cs">
       <DependentUpon>AttribSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BindableBase.cs" />
-    <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="AttribSettings\AttribSettingsViewModel.cs" />
+    <Compile Include="BaseClass\DelegateCommand.cs" />
+    <Compile Include="BaseClass\BindableBase.cs" />
+    <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="MainWindowView.xaml.cs">
       <DependentUpon>MainWindowView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="RelayCommand.cs" />
+    <Compile Include="BaseClass\RelayCommand.cs" />
     <Compile Include="ThemeCatalog\ThemeCatalogView.xaml.cs">
       <DependentUpon>ThemeCatalogView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ThemeCatalog\ThemeCatalogViewModel.cs" />
-    <Compile Include="ValidatableBindableBase.cs" />
-    <Compile Include="ViewModelLocator.cs" />
+    <Compile Include="BaseClass\ValidatableBindableBase.cs" />
+    <Compile Include="BaseClass\ViewModelLocator.cs" />
     <Compile Include="Window1.xaml.cs">
       <DependentUpon>Window1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
     </Compile>
     <Page Include="AttribSettings\AttribSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
     <Page Include="MainWindowView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -176,6 +177,7 @@
       <Name>Rnd.Theme.Bootstrap</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
