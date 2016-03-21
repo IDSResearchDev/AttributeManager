@@ -62,7 +62,7 @@
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="3">
+                                CornerRadius="0">
                             <Grid x:Name="markGrid">
                                 <Path x:Name="optionMark"
                                       Margin="3"

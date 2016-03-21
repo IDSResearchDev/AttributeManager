@@ -24,7 +24,7 @@
                         <Border x:Name="border"
                                 BorderBrush="{StaticResource NormalBorderBrush}"
                                 BorderThickness="0.8"
-                                CornerRadius="3">
+                                CornerRadius="0">
                             <Border.Background>
                                 <SolidColorBrush Color="{StaticResource DefaultBackgroundColor}" />
                             </Border.Background>
@@ -37,7 +37,7 @@
                     <ControlTemplate.Triggers>
 
                         <Trigger Property="IsFocused" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{StaticResource NormalBackgroundBrush}" />
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource FocusBackgroundBrush}" />
                             <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource FocusBorderBrush}" />
                             <Setter TargetName="border" Property="BorderThickness" Value="2" />
                         </Trigger>
@@ -79,7 +79,7 @@
                         <Border x:Name="border"
                                 BorderBrush="{StaticResource PrimaryNormalBorderBrush}"
                                 BorderThickness="0.8"
-                                CornerRadius="3">
+                                CornerRadius="0">
                             <Border.Background>
                                 <SolidColorBrush Color="{StaticResource PrimaryNormalBackgroundColor}" />
                             </Border.Background>
@@ -88,7 +88,7 @@
                                               VerticalAlignment="Center"
                                               TextElement.Foreground="White" />
                         </Border>
-                    </Grid>
+                    </Grid>  
                     <ControlTemplate.Triggers>
 
                         <Trigger Property="IsFocused" Value="True">
@@ -108,10 +108,14 @@
                         </Trigger>
 
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="border" Property="Background" Value="{StaticResource DisabledBackgroundBrush}" />
-                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource DisabledBorderBrush}" />
-                            <Setter TargetName="content" Property="TextElement.Foreground" Value="{StaticResource DisabledForegroundBrush}" />
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource PrimaryDisabledBackgroundBrush}" />
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource PrimaryDisabledBorderBrush}" />
+                            <Setter TargetName="content" Property="TextElement.Foreground" Value="{StaticResource PrimaryDisabledForegroundBrush}" />
                         </Trigger>
+
+                        <!--<Trigger Property="IsPressed" Value="False">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource PrimaryNotPressed}"></Setter>
+                        </Trigger>-->
 
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

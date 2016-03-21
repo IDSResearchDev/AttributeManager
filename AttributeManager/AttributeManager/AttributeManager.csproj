@@ -152,16 +152,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Dropbox\Files\Stash\Matt\Package Tool 2\Rnd.Common\Rnd.Common.csproj">
-      <Project>{9012f455-2b9e-4d24-9d6c-928bc596e364}</Project>
-      <Name>Rnd.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Rnd.Theme.Bootstrap\Rnd.Theme.Bootstrap.csproj">
-      <Project>{d5f6dbad-eb28-4098-a3d6-8d6c89b13fcb}</Project>
-      <Name>Rnd.Theme.Bootstrap</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
@@ -175,6 +165,16 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Close-24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Rnd.Common\Rnd.Common.csproj">
+      <Project>{9012f455-2b9e-4d24-9d6c-928bc596e364}</Project>
+      <Name>Rnd.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Rnd.Theme.Bootstrap\Rnd.Theme.Bootstrap.csproj">
+      <Project>{d5f6dbad-eb28-4098-a3d6-8d6c89b13fcb}</Project>
+      <Name>Rnd.Theme.Bootstrap</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
