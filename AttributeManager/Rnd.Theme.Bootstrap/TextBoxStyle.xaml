@@ -31,12 +31,12 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="0.9"
                             CornerRadius="0">
-                        <Border.Effect>
+                        <!--<Border.Effect>
                             <DropShadowEffect BlurRadius="5"
                                               RenderingBias="Quality"
                                               ShadowDepth="0"
                                               Color="{StaticResource GlowBlue}" />
-                        </Border.Effect>
+                        </Border.Effect>-->
                         <ScrollViewer x:Name="PART_ContentHost" />
                     </Border>
                     <!--  Required triggers define here  -->
@@ -44,7 +44,7 @@
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="border" Property="Background" Value="{StaticResource DisabledForegroundBrush}" />
                         </Trigger>
-                        <Trigger Property="IsFocused" Value="True">
+                        <!--<Trigger Property="IsFocused" Value="True">
                             <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource GlowBlueBrush}" />
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
@@ -66,7 +66,7 @@
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>
-                        </Trigger>
+                        </Trigger>-->
                         <MultiDataTrigger x:Name="ControlHasErrors">
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding Path=(Validation.HasError), RelativeSource={RelativeSource Self}}" Value="true" />
@@ -76,14 +76,14 @@
                             <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource RedBorderBrush}" />
                         </MultiDataTrigger>
 
-                        <MultiDataTrigger x:Name="FirmFolderEmptyField">
+                        <!--<MultiDataTrigger x:Name="FirmFolderEmptyField">
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding Path=(Validation.HasError), RelativeSource={RelativeSource Self}}" Value="true" />
-                                <Condition Binding="{Binding IsFocused, ElementName=BtnSave, Mode=OneWay}" Value="True" />
+                                <Condition Binding="{Binding IsFocused, ElementName=BtnCreate, Mode=OneWay}" Value="True" />
                             </MultiDataTrigger.Conditions>
                             <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}" />
                             <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource RedBorderBrush}" />
-                        </MultiDataTrigger>
+                        </MultiDataTrigger>-->
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

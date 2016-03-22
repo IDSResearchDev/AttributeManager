@@ -15,19 +15,19 @@ namespace AttributeManager
             [CallerMemberName] string propertyName = null)
         {
             if (object.Equals(member, val)) return;
-
             member = val;
-            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            OnPropertyChanged(propertyName);
         }
 
-        protected void OnPropertyChanged([CallerMemberName]string propertyName=null)
+
+        protected void OnPropertyChanged([CallerMemberName]string propertyName = null)
         {
             var handler = PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        
+
 
         public void Close()
         {

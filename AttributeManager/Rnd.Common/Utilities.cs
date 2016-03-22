@@ -86,6 +86,28 @@ namespace Rnd.Common
             return new Tuple<DialogResult, string>(fileDialog.ShowDialog(), fileDialog.FileName.ToString());
         }
 
+        public Tuple<DialogResult, string> FileDialog(string title, string filename, string fileextension)
+        {
+            var fileDialog = new OpenFileDialog();
+
+            fileDialog.InitialDirectory = @"C:\";
+            fileDialog.Title = title;
+
+            fileDialog.CheckFileExists = true;
+            fileDialog.CheckPathExists = true;
+
+            //fileDialog.DefaultExt = "txt";
+            fileDialog.Filter = $"{filename} (*.{fileextension.Replace(".","")})|*.{fileextension.Replace(".", "")}";
+            //fileDialog.FilterIndex = 2;
+            fileDialog.RestoreDirectory = true;
+
+            fileDialog.ReadOnlyChecked = true;
+            fileDialog.ShowReadOnly = true;
+
+            return new Tuple<DialogResult, string>(fileDialog.ShowDialog(), fileDialog.FileName.ToString());
+        }
+
+
         /// <summary>
         /// Represents an XML document.
         /// </summary>
@@ -471,9 +493,8 @@ namespace Rnd.Common
 
             if (content != null)
             {
-                foreach (var item in contentCopy)
+                foreach (var i in contentCopy.Select(item => item.Split(delimiter)))
                 {
-                    var i = item.Split(delimiter);
                     if (newValues.ContainsKey(i[0]))
                     {
                         content[index] = $"{i[0]}{delimiter}{newValues[i[0]]}";
@@ -484,7 +505,8 @@ namespace Rnd.Common
                     }
                     index++;
                 }
-                File.WriteAllLines(filePath, content);
+                File.WriteAllLines(filePath, content); 
+
             }
         }
 

@@ -8,10 +8,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Utilities = Rnd.Common.Utilities;
+using System.ComponentModel;
 
 namespace AttributeManager
 {
-    public class MainWindowViewModel : BindableBase
+    public class MainWindowViewModel : BindableBase, IDataErrorInfo
     {
         private Utilities _utilities;
         List<AttributeModel> componentDictionary;
@@ -23,7 +24,7 @@ namespace AttributeManager
             set { SetProperty(ref _currentViewModel, value); }
         }
 
-        public MainWindowViewModel() { }
+        public MainWindowViewModel() { CanValidate = false; }
 
         public void LoadCurrentView()
         {
@@ -35,14 +36,16 @@ namespace AttributeManager
         public Visibility ProgressVisible
         {
             get { return _progressVisible; }
-            set { SetProperty(ref _progressVisible, value); }
+            set { SetProperty(ref _progressVisible, value);
+                
+            }
         }
 
         private string _outputdirectory=string.Empty;
         public string OutputDirectory
         {
             get { return _outputdirectory; }
-            set { SetProperty(ref _outputdirectory, value); }
+            set { SetProperty(ref _outputdirectory, value);}
         }
 
 
@@ -50,7 +53,7 @@ namespace AttributeManager
         public string DefaultAttributeDirectory
         {
             get { return _defaultAttributeDirectory; }
-            set { SetProperty(ref _defaultAttributeDirectory, value); }
+            set { SetProperty(ref _defaultAttributeDirectory, value);}
         }
 
         
@@ -62,7 +65,7 @@ namespace AttributeManager
 
             if (cmdparam.Equals("default"))
             {
-                dialog = _utilities.FileDialog("Select the excel template.");
+                dialog = _utilities.FileDialog("Select the excel template.", "Excel files","xls");
                 dialogresult = dialog.Item1;
                 selectedpath = dialog.Item2;
                 
@@ -86,44 +89,54 @@ namespace AttributeManager
             {
                 return new DelegateCommand(() =>
                 {
-                    ProgressVisible = Visibility.Visible;
+                    CanValidate = true;
 
-                    IExcelReader reader = new ExcelReader(DefaultAttributeDirectory);
-                    var components = reader.GetComponents();
-
-                    componentDictionary = reader.GetComponentDictionary();
-                    reader.ForceDispose();
-
-                    var appDomain = AppDomain.CurrentDomain.BaseDirectory;
-                    var standardFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources\\standard.txt");
-                    int counter = 1;
-                    foreach (var component in components)
-                    {
-                        var jfile = File.ReadAllText(standardFile);
-                        var filePath = Path.Combine(OutputDirectory,$"{component.Size}.j{component.ComponentNumber}");
-                        _utilities.CreateFileWithText(filePath, jfile);
+                    if (String.IsNullOrEmpty(DefaultAttributeDirectory) || String.IsNullOrEmpty(OutputDirectory)) return;
 
 
-                        Dictionary<string, string> attributes = new Dictionary<string, string>();
-                        attributes.Add($"joint_attributes.saveas_file", GetAttributeFormatType(component.Size, "string"));
-                        attributes.Add($"joint_attributes.get_menu", GetAttributeFormatType(component.Size, "string"));
-                        foreach (var attribute in component.Attributes)
+
+                    if (!_utilities.CheckIfFileExists(DefaultAttributeDirectory) && !_utilities.CheckIfDirectoryExists(OutputDirectory)) return;
+                    
+                        ProgressVisible = Visibility.Visible;
+                        IExcelReader reader = new ExcelReader(DefaultAttributeDirectory);
+                        var components = reader.GetComponents();
+
+                        componentDictionary = reader.GetComponentDictionary();
+                        reader.ForceDispose();
+
+                        var appDomain = AppDomain.CurrentDomain.BaseDirectory;
+                        var standardFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources\\standard.txt");
+                        int counter = 1;
+                        foreach (var component in components)
                         {
-                            var id = GetAttribute(attribute.Key, 1);
-                            var paramType = GetAttribute(attribute.Key, 2);
+                            var jfile = File.ReadAllText(standardFile);
+                            var filePath = Path.Combine(OutputDirectory, $"{component.Size}.j{component.ComponentNumber}");
+                            _utilities.CreateFileWithText(filePath, jfile);
 
-                            if (id != null && paramType != null)
+
+                            Dictionary<string, string> attributes = new Dictionary<string, string>();
+                            attributes.Add($"joint_attributes.saveas_file", GetAttributeFormatType(component.Size, "string"));
+                            attributes.Add($"joint_attributes.get_menu", GetAttributeFormatType(component.Size, "string"));
+                            foreach (var attribute in component.Attributes)
                             {
-                                // check paramtype
-                                // set/change attribute.value base on paramtype  
-                                attributes.Add($"joint_attributes.{id}", GetAttributeFormatType(attribute.Value, paramType.ToLower()));
-                            }
-                        }
-                        _utilities.UpdateTextFileValues(filePath: filePath, delimiter: ' ', newValues: attributes);
-                        counter++;
-                    }
+                                var id = GetAttribute(attribute.Key, 1);
+                                var paramType = GetAttribute(attribute.Key, 2);
 
+                                if (id != null && paramType != null)
+                                {
+                                    // check paramtype
+                                    // set/change attribute.value base on paramtype  
+                                    attributes.Add($"joint_attributes.{id}", GetAttributeFormatType(attribute.Value, paramType.ToLower()));
+                                }
+                            }
+                            _utilities.UpdateTextFileValues(filePath: filePath, delimiter: ' ', newValues: attributes);
+                            counter++;
+                        }
                    
+
+
+
+
                 });
             }
         }
@@ -161,6 +174,71 @@ namespace AttributeManager
                 {
                     Close();
                 });
+            }
+        }
+
+
+        #endregion
+
+        #region Validation Error
+        public string Error
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public string this[string columnName]
+        {
+            get
+            {
+                if (CanValidate)
+                {
+                    if (columnName == "DefaultAttributeDirectory")
+                    {
+                        if (string.IsNullOrEmpty(DefaultAttributeDirectory))
+                        {
+                            return "Please select excel file.";
+                        }
+
+                        if (!_utilities.CheckIfFileExists(DefaultAttributeDirectory))
+                        {
+                            return "Please provide existing excel file template.";
+                        }
+                            
+                    }
+
+                    if (columnName == "OutputDirectory")
+                    {
+                        if (string.IsNullOrEmpty(OutputDirectory))
+                        {
+                            return "Please provide output directory.";
+                        }
+
+                        if (!_utilities.CheckIfDirectoryExists(OutputDirectory))
+                        {
+                            return "Output directory is not exist.";
+                        }
+                            
+                    }
+                }
+
+                return string.Empty;
+            }
+            
+        }
+
+        private bool _canValidate;
+        private bool CanValidate
+        { 
+            get { return _canValidate; }
+            set
+            {
+                _canValidate = value;
+                OnPropertyChanged("CanValidate");
+                OnPropertyChanged("DefaultAttributeDirectory");
+                OnPropertyChanged("OutputDirectory");
             }
         }
         #endregion
