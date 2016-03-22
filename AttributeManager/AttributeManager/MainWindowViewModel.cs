@@ -1,5 +1,4 @@
 ﻿using System;
-using Rnd.Common;
 using AttributeManager.BaseClass;
 using System.Windows.Input;
 using System.Windows;
@@ -8,6 +7,7 @@ using AttributeManager.Models;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Utilities = Rnd.Common.Utilities;
 
 namespace AttributeManager
 {

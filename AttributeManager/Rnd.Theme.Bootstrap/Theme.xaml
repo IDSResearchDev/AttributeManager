@@ -7,7 +7,7 @@
         <ResourceDictionary Source="CheckBoxStyle.xaml" />
         <ResourceDictionary Source="FontStyle.xaml" />
         <ResourceDictionary Source="TabControlStyle.xaml" />
-        <ResourceDictionary Source="TextBoxStyle.xaml" />
+        <!--<ResourceDictionary Source="TextBoxStyle.xaml" />-->
         <ResourceDictionary Source="ToolTipStyle.xaml" />
         <ResourceDictionary Source="ComboBoxStyle.xaml"/>
         <ResourceDictionary Source="ProgressBarStyle.xaml"/>

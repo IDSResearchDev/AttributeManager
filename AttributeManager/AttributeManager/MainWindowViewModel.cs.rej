@@ -1,0 +1,9 @@
+diff a/AttributeManager/AttributeManager/MainWindowViewModel.cs b/AttributeManager/AttributeManager/MainWindowViewModel.cs	(rejected hunks)
+@@ -3,6 +3,7 @@
+  using System.Windows.Input;
+  using System.Windows;
+  using System.Windows.Forms;
+++<<<<<<< Updated upstream
+ +using AttributeManager.Models;
+ +using System.Collections.Generic;
+ +using System.IO;

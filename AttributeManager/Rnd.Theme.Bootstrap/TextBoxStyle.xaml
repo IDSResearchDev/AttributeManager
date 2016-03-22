@@ -33,7 +33,6 @@
                             CornerRadius="0">
                         <Border.Effect>
                             <DropShadowEffect BlurRadius="5"
-                                              Opacity="0"
                                               RenderingBias="Quality"
                                               ShadowDepth="0"
                                               Color="{StaticResource GlowBlue}" />
