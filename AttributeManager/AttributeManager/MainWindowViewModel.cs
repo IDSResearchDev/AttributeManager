@@ -2,18 +2,24 @@
 using AttributeManager.BaseClass;
 using System.Windows.Input;
 using System.Windows;
-using System.Windows.Forms;
+using Forms = System.Windows.Forms;
 using AttributeManager.Models;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Utilities = Rnd.Common.Utilities;
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace AttributeManager
 {
     public class MainWindowViewModel : BindableBase, IDataErrorInfo
     {
+        public static string LocalAppFolder = Path.Combine(new Utilities().LocalAppData, "AttributeManager");
+        public static string LocalUpdaterFile = Path.Combine(LocalAppFolder, "updater.ini");
+        public static string AppVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
+
+
         private Utilities _utilities;
         List<AttributeModel> componentDictionary;
 
@@ -23,8 +29,12 @@ namespace AttributeManager
             get { return _currentViewModel; }
             set { SetProperty(ref _currentViewModel, value); }
         }
-
-        public MainWindowViewModel() { CanValidate = false; }
+        
+        public MainWindowViewModel()
+        {
+            CanValidate = false;
+            CheckLatestUpdate();
+        }
 
         public void LoadCurrentView()
         {
@@ -59,8 +69,8 @@ namespace AttributeManager
         
         private string ShowDialog(string path, string cmdparam)
         {
-            Tuple<DialogResult, string> dialog;
-            DialogResult dialogresult = new DialogResult();
+            Tuple<Forms.DialogResult, string> dialog;
+            Forms.DialogResult dialogresult = new Forms.DialogResult();
             string selectedpath = string.Empty;
 
             if (cmdparam.Equals("default"))
@@ -77,7 +87,7 @@ namespace AttributeManager
                 selectedpath = dialog.Item2;
             }
 
-            return (dialogresult != DialogResult.OK) ? path : selectedpath;
+            return (dialogresult != Forms.DialogResult.OK) ? path : selectedpath;
         }
 
 
@@ -92,58 +102,50 @@ namespace AttributeManager
                     CanValidate = true;
 
                     if (String.IsNullOrEmpty(DefaultAttributeDirectory) || String.IsNullOrEmpty(OutputDirectory)) return;
-
-
-
+                    
                     if (!_utilities.CheckIfFileExists(DefaultAttributeDirectory) && !_utilities.CheckIfDirectoryExists(OutputDirectory)) return;
                     
-                        ProgressVisible = Visibility.Visible;
-                        IExcelReader reader = new ExcelReader(DefaultAttributeDirectory);
-                        var components = reader.GetComponents();
+                    ProgressVisible = Visibility.Visible;
+                    IExcelReader reader = new ExcelReader(DefaultAttributeDirectory);
+                    var components = reader.GetComponents();
 
-                        componentDictionary = reader.GetComponentDictionary();
-                        reader.ForceDispose();
+                    componentDictionary = reader.GetComponentDictionary();
+                    reader.ForceDispose();
 
-                        var appDomain = AppDomain.CurrentDomain.BaseDirectory;
-                        var standardFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources\\standard.txt");
-                        int counter = 1;
-                        foreach (var component in components)
+                    var appDomain = AppDomain.CurrentDomain.BaseDirectory;
+                    var standardFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources\\standard.txt");
+                    int counter = 1;
+                    foreach (var component in components)
+                    {
+                        var jfile = File.ReadAllText(standardFile);
+                        var filePath = Path.Combine(OutputDirectory, $"{component.Size}.j{component.ComponentNumber}");
+                        _utilities.CreateFileWithText(filePath, jfile);
+
+
+                        Dictionary<string, string> attributes = new Dictionary<string, string>();
+                        attributes.Add($"joint_attributes.saveas_file", GetAttributeFormatType(component.Size, "string"));
+                        attributes.Add($"joint_attributes.get_menu", GetAttributeFormatType(component.Size, "string"));
+                        foreach (var attribute in component.Attributes)
                         {
-                            var jfile = File.ReadAllText(standardFile);
-                            var filePath = Path.Combine(OutputDirectory, $"{component.Size}.j{component.ComponentNumber}");
-                            _utilities.CreateFileWithText(filePath, jfile);
+                            var id = GetAttribute(attribute.Key, 1);
+                            var paramType = GetAttribute(attribute.Key, 2);
 
-
-                            Dictionary<string, string> attributes = new Dictionary<string, string>();
-                            attributes.Add($"joint_attributes.saveas_file", GetAttributeFormatType(component.Size, "string"));
-                            attributes.Add($"joint_attributes.get_menu", GetAttributeFormatType(component.Size, "string"));
-                            foreach (var attribute in component.Attributes)
+                            if (id != null && paramType != null)
                             {
-                                var id = GetAttribute(attribute.Key, 1);
-                                var paramType = GetAttribute(attribute.Key, 2);
-
-                                if (id != null && paramType != null)
-                                {
-                                    // check paramtype
-                                    // set/change attribute.value base on paramtype  
-                                    attributes.Add($"joint_attributes.{id}", GetAttributeFormatType(attribute.Value, paramType.ToLower()));
-                                }
+                                // check paramtype
+                                // set/change attribute.value base on paramtype  
+                                attributes.Add($"joint_attributes.{id}", GetAttributeFormatType(attribute.Value, paramType.ToLower()));
                             }
-                            _utilities.UpdateTextFileValues(filePath: filePath, delimiter: ' ', newValues: attributes);
-                            counter++;
                         }
-                   
-
-
-
-
+                        _utilities.UpdateTextFileValues(filePath: filePath, delimiter: ' ', newValues: attributes);
+                        counter++;
+                    }
                 });
             }
         }
 
         public ICommand SetExcelTemplate
         {
-
             get
             {
                 return new DelegateCommand((@params) =>
@@ -175,8 +177,7 @@ namespace AttributeManager
                     Close();
                 });
             }
-        }
-
+        }        
 
         #endregion
 
@@ -231,7 +232,7 @@ namespace AttributeManager
 
         private bool _canValidate;
         private bool CanValidate
-        { 
+        {
             get { return _canValidate; }
             set
             {
@@ -239,6 +240,35 @@ namespace AttributeManager
                 OnPropertyChanged("CanValidate");
                 OnPropertyChanged("DefaultAttributeDirectory");
                 OnPropertyChanged("OutputDirectory");
+            }
+        }
+
+        public ICommand CheckUpdate
+        {
+            get
+            {
+                return new DelegateCommand(() =>
+                {
+                    string updater = Path.Combine(LocalAppFolder, @"updater.exe");
+                    if (!File.Exists(updater))
+                    {
+                        MessageBox.Show(this.GetCurrentWindow(), "Updater not found.", "Update Failed", MessageBoxButton.OK, MessageBoxImage.Information);
+                        return;
+                    }
+                    if (File.Exists(LocalUpdaterFile))
+                    {
+                        if (CheckLatestUpdate())
+                        {
+                            UpdateSettingView update = new UpdateSettingView();
+                            update.Owner = this.GetCurrentWindow();
+                            update.ShowDialog();
+                        }
+                        else
+                        {
+                            Process.Start(updater);
+                        }
+                    }
+                });
             }
         }
         #endregion
@@ -327,6 +357,63 @@ namespace AttributeManager
             return (numerator / denominator);
         }
 
+        #endregion
+
+        #region Update
+
+        private string _getUpdate;
+        public string GetUpdate
+        {
+            get { return _getUpdate; }
+            set
+            {
+                _getUpdate = value;
+                SetProperty(ref _getUpdate, value);
+            }
+        }
+
+        private string _checkForUpdate;
+        public string CheckForUpdate
+        {
+            get { return _checkForUpdate; }
+            set
+            {
+                _checkForUpdate = value;
+                SetProperty(ref _checkForUpdate, value);
+            }
+        }
+        private bool CheckLatestUpdate()
+        {
+            bool value = false;
+            if (File.Exists(LocalUpdaterFile))
+            {
+                var aiuFile = "attribute_manager_update.aiu";
+                var util = new Rnd.Common.Utilities();
+                var updatePath = Path.Combine(util.GetTextFileValue(LocalUpdaterFile, '=', "DownloadsFolder"), aiuFile);
+                if (File.Exists(updatePath))
+                {
+                    var updateVersion = new Version(util.GetTextFileValue(updatePath, '=', "Version")).ToString(3);
+
+                    if (VersionComparer.IsUptoDate(updateVersion, AppVersion))
+                    {
+                        value = true;
+                        GetUpdate = string.Empty;
+                        CheckForUpdate = "Check for Update";
+                    }
+                    else
+                    {
+                        GetUpdate = "Get latest version ";
+                        CheckForUpdate = updateVersion;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show($"Attribute Manager update file ({aiuFile}) doesn't exist.", "Update not found", MessageBoxButton.OK, MessageBoxImage.Information);
+                    value = true;
+                }
+            }
+            return value;
+        }
         #endregion
     }
 

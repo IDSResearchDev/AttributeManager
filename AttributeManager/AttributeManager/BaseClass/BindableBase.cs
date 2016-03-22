@@ -39,5 +39,18 @@ namespace AttributeManager
                 }
             }
         }
+
+        public System.Windows.Window GetCurrentWindow()
+        {
+            System.Windows.Window currentWindow = null;
+            foreach (System.Windows.Window window in System.Windows.Application.Current.Windows)
+            {
+                if (window.DataContext == this)
+                {
+                    currentWindow = window;
+                }
+            }
+            return currentWindow;
+        }
     }
 }
