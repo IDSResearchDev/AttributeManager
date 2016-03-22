@@ -13,7 +13,7 @@
         Title="Connection Creator (.j attribute creator)" Height="249.176" Width="692.067" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen" 
         Style="{StaticResource WindowTextStyle}"
-        local:ViewModelLocator.AutoViewModel="True" MouseDown="Window_MouseDown" Topmost="True" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.IsSharedSizeScope="True">
+        local:ViewModelLocator.AutoViewModel="True" MouseDown="Window_MouseDown" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.IsSharedSizeScope="True">
     <!--AllowsTransparency="True" WindowStyle="None"-->
 
     <Window.Resources>
@@ -130,11 +130,11 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock Grid.Row="2" Grid.Column="1" Text="Default attribute:" Padding="0,0,2,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="99" FontWeight="SemiBold" FontSize="12"/>
-            <TextBox Name="TxtDefaultAttribute" Grid.Row="2" Grid.Column="2" Margin="5,0,5,0" Height="25" HorizontalContentAlignment="Left" VerticalContentAlignment="Bottom" FontSize="12" FontFamily="Open Sans" Text="{Binding DefaultAttributeDirectory}"/>
+            <TextBox Name="TxtDefaultAttribute" Grid.Row="2" Grid.Column="2" Margin="5,0,5,0" Height="25" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="12" FontFamily="Open Sans" Text="{Binding DefaultAttributeDirectory}"/>
             <Button Grid.Row="2" Grid.Column="3" Margin="5,0,5,0" Height="25" Content=". . ." Command="{Binding SetExcelTemplate}" CommandParameter="default" />
 
             <TextBlock Grid.Row="3" Grid.Column="1" Text="Output directory:" Padding="0,0,2,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="100" FontWeight="SemiBold" FontSize="12"/>
-            <TextBox Name="TxtOutputDirectory" Grid.Row="3" Grid.Column="2" Margin="5,5,5,0" Height="25" HorizontalContentAlignment="Left" VerticalContentAlignment="Bottom" FontSize="12" FontFamily="Open Sans" Text="{Binding OutputDirectory}"/>
+            <TextBox Name="TxtOutputDirectory" Grid.Row="3" Grid.Column="2" Margin="5,5,5,0" Height="25" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="12" FontFamily="Open Sans" Text="{Binding OutputDirectory}"/>
             <Button Grid.Row="3" Grid.Column="3" Margin="5,5,5,0" Height="25" Content=". . ."  Command="{Binding SetOutputDirectory}" CommandParameter="outputdir"/>
 
             <TextBlock Visibility="{Binding ProgressVisible}" Grid.Row="5" Grid.Column="1" Text="Creating files" Padding="0,0,2,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="77" Margin="10" FontWeight="SemiBold" FontSize="12"/>

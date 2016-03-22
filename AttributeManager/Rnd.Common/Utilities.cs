@@ -463,6 +463,31 @@ namespace Rnd.Common
             }
         }
 
+        public void UpdateTextFileValues(string filePath, char delimiter, Dictionary<string, string> newValues)
+        {
+            var content = this.ReadAllLines(filePath);
+            int index = 0, counter = 0;
+            var contentCopy = content;
+
+            if (content != null)
+            {
+                foreach (var item in contentCopy)
+                {
+                    var i = item.Split(delimiter);
+                    if (newValues.ContainsKey(i[0]))
+                    {
+                        content[index] = $"{i[0]}{delimiter}{newValues[i[0]]}";
+                        counter++;
+
+                        if (counter >= newValues.Count)
+                            break;
+                    }
+                    index++;
+                }
+                File.WriteAllLines(filePath, content);
+            }
+        }
+
         public string GetTextFileValue(string filePath, char delimiter, string attribute)
         {
             var content = this.ReadAllLines(filePath);

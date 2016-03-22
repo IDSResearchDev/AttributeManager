@@ -59,6 +59,11 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Microsoft SDKs\Expression\Blend\.NETFramework\v4.5\Libraries\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio 12.0\Visual Studio Tools for Office\PIA\Office15\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Forms" />
@@ -90,11 +95,15 @@
     <Compile Include="AttribSettings\AttribSettingsViewModel.cs" />
     <Compile Include="BaseClass\DelegateCommand.cs" />
     <Compile Include="BaseClass\BindableBase.cs" />
+    <Compile Include="BaseClass\ExcelReader.cs" />
+    <Compile Include="BaseClass\IExcelReader.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="MainWindowView.xaml.cs">
       <DependentUpon>MainWindowView.xaml</DependentUpon>
     </Compile>
     <Compile Include="BaseClass\RelayCommand.cs" />
+    <Compile Include="Models\AttributeModel.cs" />
+    <Compile Include="Models\Component.cs" />
     <Compile Include="ThemeCatalog\ThemeCatalogView.xaml.cs">
       <DependentUpon>ThemeCatalogView.xaml</DependentUpon>
     </Compile>
@@ -148,6 +157,9 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="Resources\AttributeManager.xls">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -177,7 +189,11 @@
       <Name>Rnd.Theme.Bootstrap</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\standard.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
