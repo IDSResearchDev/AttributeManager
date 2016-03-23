@@ -100,68 +100,21 @@ namespace AttributeManager
         {
             get
             {
-                return new DelegateCommand(() =>
+                return new DelegateCommand(async () =>
                 {
                     CanValidate = true;
-                    CreateJfiles();
-
-                    //if (String.IsNullOrEmpty(DefaultAttributeDirectory) || String.IsNullOrEmpty(OutputDirectory)) return;
-
-                    //if (!_utilities.CheckIfFileExists(DefaultAttributeDirectory) && !_utilities.CheckIfDirectoryExists(OutputDirectory)) return;
-
-
-                    //Task t = Task.Run(() =>
-                    //{
-                    //    ProgressVisible = Visibility.Visible;
-                    //    IExcelReader reader = new ExcelReader(DefaultAttributeDirectory);
-                    //    var components = reader.GetComponents();
-
-                    //    componentDictionary = reader.GetComponentDictionary();
-                    //    reader.ForceDispose();
-
-                    //    var appDomain = AppDomain.CurrentDomain.BaseDirectory;
-                    //    var standardFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources\\standard.txt");
-                    //    int counter = 1;
-                    //    foreach (var component in components)
-                    //    {
-                    //        var jfile = File.ReadAllText(standardFile);
-                    //        var filePath = Path.Combine(OutputDirectory, $"{component.Size}.j{component.ComponentNumber}");
-                    //        _utilities.CreateFileWithText(filePath, jfile);
-
-
-                    //        Dictionary<string, string> attributes = new Dictionary<string, string>();
-                    //        attributes.Add($"joint_attributes.saveas_file", GetAttributeFormatType(component.Size, "string"));
-                    //        attributes.Add($"joint_attributes.get_menu", GetAttributeFormatType(component.Size, "string"));
-                    //        foreach (var attribute in component.Attributes)
-                    //        {
-                    //            var id = GetAttribute(attribute.Key, 1);
-                    //            var paramType = GetAttribute(attribute.Key, 2);
-
-                    //            if (id != null && paramType != null)
-                    //            {
-                    //                // check paramtype
-                    //                // set/change attribute.value base on paramtype  
-                    //                attributes.Add($"joint_attributes.{id}", GetAttributeFormatType(attribute.Value, paramType.ToLower()));
-                    //            }
-                    //        }
-                    //        _utilities.UpdateTextFileValues(filePath: filePath, delimiter: ' ', newValues: attributes);
-                    //        counter++;
-                    //    }
-                    //});
-                    //t.Wait();
-
-                    //ProgressVisible = Visibility.Collapsed;
-                    //MessageBox.Show("Attribute files created.");
+                    await CreateJfiles();
                 });
             }
         }
 
-        public async void CreateJfiles()
+        public async Task CreateJfiles()
         {
+
             if (String.IsNullOrEmpty(DefaultAttributeDirectory) || String.IsNullOrEmpty(OutputDirectory)) return;
             if (!_utilities.CheckIfFileExists(DefaultAttributeDirectory) && !_utilities.CheckIfDirectoryExists(OutputDirectory)) return;
 
-            await Task.Run(() =>
+            await Task.Run( ()=>
             {
                 ProgressVisible = Visibility.Visible;
                 IExcelReader reader = new ExcelReader(DefaultAttributeDirectory);
@@ -202,10 +155,10 @@ namespace AttributeManager
                 ProgressVisible = Visibility.Collapsed;
                 MessageBox.Show("Attribute files created.");
             });
+
+
         }
-
-
-
+        
         public ICommand SetExcelTemplate
         {
             get

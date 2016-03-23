@@ -126,6 +126,7 @@ namespace AttributeManager.BaseClass
             _workBook.Close();
 
 
+            ReleaseObject(_itemSheets);
             ReleaseObject(_workSheets);
             ReleaseObject(_workBook);
             _xls.Quit();
