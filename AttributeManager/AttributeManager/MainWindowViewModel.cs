@@ -319,7 +319,7 @@ namespace AttributeManager
                 case "double":
                     if (String.IsNullOrEmpty(value))
                     {
-                        newValue = "-2147483648";
+                        newValue = "-2147483648.000000";
                     }
                     else
                     {

@@ -68,7 +68,7 @@ namespace AttributeManager.BaseClass
                 component.ComponentNumber = 141;
                 row++;
 
-                for (int i = 0; i < attributes.Count - 1; i++)
+                for (int i = 0; i <= attributes.Count - 1; i++)
                 {
                     component.Size = _itemSheets.Range[$"{dataColumns[0]}{row.ToString()}", Missing.Value].Value2;
 
