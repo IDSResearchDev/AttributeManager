@@ -20,6 +20,7 @@ namespace AttributeManager.BaseClass
         private string[] dataColumns = { "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
         private string[] legendColumns = { "A", "B", "C", "D" };
         int dataRowHeader = 3;
+
         public ExcelReader(string fileLocation)
         {
             _xls = new WorkBook.Application
@@ -30,11 +31,63 @@ namespace AttributeManager.BaseClass
 
             _workBook = _xls.Workbooks.Open(fileLocation, 0, false, 5, "", "", false, WorkBook.XlPlatform.xlWindows
                                                      , "", true, false, 0, true, false, false);
+            
             _workSheets = _workBook.Worksheets;
+
+            GetDataRowsandColumns();
+        }
+
+        public void GetDataRowsandColumns()
+        {
+            int SheetCount = _workSheets.Count;
+            
+            for (int i = 1; i <= SheetCount; i++)
+            {
+                _itemSheets = _workSheets[i];
+                var worksSheetName = _itemSheets.Name;
+
+                if (worksSheetName.Equals("Legend")) return;
+                
+
+                WorkBook.Range excelRange = _itemSheets.UsedRange;
+
+                var rowCount = excelRange.Rows.Count;
+                var columnCount = excelRange.Columns.Count;
+
+                
+                object[,] valueArray = (object[,])excelRange.get_Value(WorkBook.XlRangeValueDataType.xlRangeValueDefault);
+
+                for (int row = 2; row <= rowCount; row++)
+                {
+                    var str = Convert.ToString(valueArray[row, 2]);
+                    if (!string.IsNullOrEmpty(str) || !string.IsNullOrWhiteSpace(str))
+                    {
+
+                        var @out = "";
+                        for (int col = 2; col < columnCount; col++)
+                        {
+                            var val = Convert.ToString(valueArray[row, col]);
+                            @out += val + ",";
+                            
+                        }
+                        Console.WriteLine(@out);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+ 
+
+            }
+
+
+            
         }
 
         public List<string> IdentifyAttributes()
         {
+            
             List<string> attributes = new List<string>();
             int checker = 0, index = 0;
             _itemSheets = (WorkBook.Worksheet)_workSheets.Item[1];
@@ -84,7 +137,7 @@ namespace AttributeManager.BaseClass
                     components.Add(component);
                 }
             }
-
+             
             return components;
         }
 
