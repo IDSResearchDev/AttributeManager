@@ -131,7 +131,6 @@ namespace AttributeManager
                     var standardFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"Resources\\standard.j{component.ComponentNumber}");
                     if(File.Exists(standardFile))
                     {
-                        Console.WriteLine($"{component.Size} {component.ComponentNumber}");
                         var jfile = File.ReadAllText(standardFile);
                         var filePath = Path.Combine(OutputDirectory, $"{component.Size}.j{component.ComponentNumber}");
                         _utilities.CreateFileWithText(filePath, jfile);

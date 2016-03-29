@@ -96,6 +96,9 @@ namespace AttributeManager.BaseClass
                     component.ComponentNumber = componentNumber;
                     component.Size = values[0];
 
+                    if (string.IsNullOrEmpty(component.Size) || string.IsNullOrWhiteSpace(component.Size)) continue;
+                    
+
                     for (int v = 1; v < values.Count(); v++)
                     {
                         component.Attributes.Add(attributes[v], values[v]);
