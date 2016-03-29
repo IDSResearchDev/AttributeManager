@@ -16,10 +16,11 @@ namespace AttributeManager.BaseClass
         private WorkBook.Sheets _workSheets;
         private WorkBook.Worksheet _itemSheets;
         private WorkBook.Application _xls;
-
-        private string[] dataColumns = { "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
+        
         private string[] legendColumns = { "A", "B", "C", "D" };
-        int dataRowHeader = 3;
+        
+        private int _rowStart = 2;
+        private int _columnStart = 2;
 
         public ExcelReader(string fileLocation)
         {
@@ -31,113 +32,79 @@ namespace AttributeManager.BaseClass
 
             _workBook = _xls.Workbooks.Open(fileLocation, 0, false, 5, "", "", false, WorkBook.XlPlatform.xlWindows
                                                      , "", true, false, 0, true, false, false);
-            
-            _workSheets = _workBook.Worksheets;
 
-            GetDataRowsandColumns();
+            _workSheets = _workBook.Worksheets;
         }
 
-        public void GetDataRowsandColumns()
+        public List<Component> GetComponentData()
         {
             int SheetCount = _workSheets.Count;
-            
+            List<Component> components = new List<Component>();
+
             for (int i = 1; i <= SheetCount; i++)
             {
                 _itemSheets = _workSheets[i];
                 var worksSheetName = _itemSheets.Name;
 
-                if (worksSheetName.Equals("Legend")) return;
-                
+                if (worksSheetName.Equals("Legend")) continue;
 
+                List<string> data = new List<string>();
                 WorkBook.Range excelRange = _itemSheets.UsedRange;
 
                 var rowCount = excelRange.Rows.Count;
                 var columnCount = excelRange.Columns.Count;
 
-                
+
                 object[,] valueArray = (object[,])excelRange.get_Value(WorkBook.XlRangeValueDataType.xlRangeValueDefault);
 
-                for (int row = 2; row <= rowCount; row++)
+                for (int row = _rowStart; row <= rowCount; row++)
                 {
-                    var str = Convert.ToString(valueArray[row, 2]);
-                    if (!string.IsNullOrEmpty(str) || !string.IsNullOrWhiteSpace(str))
-                    {
+                    var str = Convert.ToString(valueArray[row, _columnStart]);
+                    if (string.IsNullOrEmpty(str) || string.IsNullOrWhiteSpace(str)) break;
 
-                        var @out = "";
-                        for (int col = 2; col < columnCount; col++)
-                        {
-                            var val = Convert.ToString(valueArray[row, col]);
-                            @out += val + ",";
-                            
-                        }
-                        Console.WriteLine(@out);
-                    }
-                    else
+                    var @out = "";
+                    for (int col = _columnStart; col < columnCount; col++)
                     {
-                        break;
+                        var val = Convert.ToString(valueArray[row, col]);
+
+                        @out += val + ",";
+
                     }
+                    data.Add(@out.Trim(','));
                 }
- 
 
+                components.AddRange(GetComponents(data, worksSheetName));
             }
 
-
-            
+            return components;
         }
 
-        public List<string> IdentifyAttributes()
-        {
-            
-            List<string> attributes = new List<string>();
-            int checker = 0, index = 0;
-            _itemSheets = (WorkBook.Worksheet)_workSheets.Item[1];
-            while (checker <= 3)
-            {
-                string attr = _itemSheets.Range[$"{dataColumns[index]}{dataRowHeader.ToString()}", Missing.Value].Value2;
-                if (String.IsNullOrEmpty(attr) || String.IsNullOrWhiteSpace(attr))
-                { checker++; }
-                else
-                {
-                    if (!attributes.Contains(attr))
-                        attributes.Add(attr);
-                }
-                index++;
-            }
-
-            return attributes;
-        }
-
-        public List<Component> GetComponents()
+        public List<Component> GetComponents(List<string> data, string sheetName)
         {
             List<Component> components = new List<Component>();
-            var attributes = IdentifyAttributes();
-            _itemSheets = (WorkBook.Worksheet)_workSheets.Item[1];
+            int componentNumber = 0;
+            int.TryParse(sheetName, out componentNumber);
 
-            int row = dataRowHeader;
-            bool endLine = false;
-            while (!endLine)
+            if (componentNumber != 0)
             {
-                Component component = new Component();
-                component.ComponentNumber = 141;
-                row++;
-
-                for (int i = 0; i <= attributes.Count - 1; i++)
+                var attributes = data[0].Split(',');
+                for (int i = 1; i < data.Count; i++)
                 {
-                    component.Size = _itemSheets.Range[$"{dataColumns[0]}{row.ToString()}", Missing.Value].Value2;
+                    var values = data[i].Split(',');
 
-                    string value = Convert.ToString(_itemSheets.Range[$"{dataColumns[i]}{row.ToString()}", Missing.Value].Value2);
+                    Component component = new Component();
+                    component.ComponentNumber = componentNumber;
+                    component.Size = values[0];
 
-                    component.Attributes.Add(attributes[i], value);
-                }
+                    for (int v = 1; v < values.Count(); v++)
+                    {
+                        component.Attributes.Add(attributes[v], values[v]);
+                    }
 
-                if (String.IsNullOrEmpty(component.Size) || String.IsNullOrWhiteSpace(component.Size))
-                { endLine = true; }
-                else
-                {
                     components.Add(component);
                 }
             }
-             
+
             return components;
         }
 
@@ -207,5 +174,67 @@ namespace AttributeManager.BaseClass
             }
 
         }
+
+        #region unused
+        int dataRowHeader = 3;
+        private string[] dataColumns = { "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
+        public List<string> IdentifyAttributes()
+        {
+
+            List<string> attributes = new List<string>();
+            int checker = 0, index = 0;
+            _itemSheets = (WorkBook.Worksheet)_workSheets.Item[1];
+            while (checker <= 3)
+            {
+                string attr = _itemSheets.Range[$"{dataColumns[index]}{dataRowHeader.ToString()}", Missing.Value].Value2;
+                if (String.IsNullOrEmpty(attr) || String.IsNullOrWhiteSpace(attr))
+                { checker++; }
+                else
+                {
+                    if (!attributes.Contains(attr))
+                        attributes.Add(attr);
+                }
+                index++;
+            }
+
+            return attributes;
+        }
+        public List<Component> GetComponents()
+        {
+            List<Component> components = new List<Component>();
+            var attributes = IdentifyAttributes();
+            _itemSheets = (WorkBook.Worksheet)_workSheets.Item[1];
+
+            int row = dataRowHeader;
+            bool endLine = false;
+            while (!endLine)
+            {
+                Component component = new Component();
+                component.ComponentNumber = 141;
+                row++;
+
+                for (int i = 0; i <= attributes.Count - 1; i++)
+                {
+                    component.Size = _itemSheets.Range[$"{dataColumns[0]}{row.ToString()}", Missing.Value].Value2;
+
+                    string value = Convert.ToString(_itemSheets.Range[$"{dataColumns[i]}{row.ToString()}", Missing.Value].Value2);
+
+                    component.Attributes.Add(attributes[i], value);
+                }
+
+                if (String.IsNullOrEmpty(component.Size) || String.IsNullOrWhiteSpace(component.Size))
+                { endLine = true; }
+                else
+                {
+                    components.Add(component);
+                }
+            }
+
+            return components;
+        }
+        #endregion
+
+
+
     }
 }

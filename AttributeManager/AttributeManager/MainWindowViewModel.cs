@@ -118,38 +118,43 @@ namespace AttributeManager
             {
                 ProgressVisible = Visibility.Visible;
                 IExcelReader reader = new ExcelReader(DefaultAttributeDirectory);
-                var components = reader.GetComponents();
+                //var components = reader.GetComponents();
+                var components = reader.GetComponentData();
 
                 componentDictionary = reader.GetComponentDictionary();
                 reader.ForceDispose();
 
                 var appDomain = AppDomain.CurrentDomain.BaseDirectory;
-                var standardFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources\\standard.txt");
-                int counter = 1;
+                
                 foreach (var component in components)
                 {
-                    var jfile = File.ReadAllText(standardFile);
-                    var filePath = Path.Combine(OutputDirectory, $"{component.Size}.j{component.ComponentNumber}");
-                    _utilities.CreateFileWithText(filePath, jfile);
-
-
-                    Dictionary<string, string> attributes = new Dictionary<string, string>();
-                    attributes.Add($"joint_attributes.saveas_file", GetAttributeFormatType(component.Size, "string"));
-                    attributes.Add($"joint_attributes.get_menu", GetAttributeFormatType(component.Size, "string"));
-                    foreach (var attribute in component.Attributes)
+                    var standardFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"Resources\\standard.j{component.ComponentNumber}");
+                    if(File.Exists(standardFile))
                     {
-                        var id = GetAttribute(attribute.Key, 1);
-                        var paramType = GetAttribute(attribute.Key, 2);
+                        Console.WriteLine($"{component.Size} {component.ComponentNumber}");
+                        var jfile = File.ReadAllText(standardFile);
+                        var filePath = Path.Combine(OutputDirectory, $"{component.Size}.j{component.ComponentNumber}");
+                        _utilities.CreateFileWithText(filePath, jfile);
 
-                        if (id != null && paramType != null)
+
+                        Dictionary<string, string> attributes = new Dictionary<string, string>();
+                        attributes.Add($"joint_attributes.saveas_file", GetAttributeFormatType(component.Size, "string"));
+                        attributes.Add($"joint_attributes.get_menu", GetAttributeFormatType(component.Size, "string"));
+                        foreach (var attribute in component.Attributes)
                         {
-                            // check paramtype
-                            // set/change attribute.value base on paramtype  
-                            attributes.Add($"joint_attributes.{id}", GetAttributeFormatType(attribute.Value, paramType.ToLower()));
+                            var id = GetAttribute(attribute.Key, 1);
+                            var paramType = GetAttribute(attribute.Key, 2);
+
+                            if (id != null && paramType != null)
+                            {
+                                // check paramtype
+                                // set/change attribute.value base on paramtype  
+                                attributes.Add($"joint_attributes.{id}", GetAttributeFormatType(attribute.Value, paramType.ToLower()));
+                            }
                         }
+                        _utilities.UpdateTextFileValues(filePath: filePath, delimiter: ' ', newValues: attributes);
                     }
-                    _utilities.UpdateTextFileValues(filePath: filePath, delimiter: ' ', newValues: attributes);
-                    counter++;
+                    
                 }
 
                 ProgressVisible = Visibility.Collapsed;
@@ -323,30 +328,35 @@ namespace AttributeManager
                     }
                     else
                     {
-                        double wnum = 0.0;
-                        double dnum = 0.0;
-                        if (value.Trim().Contains(" "))
-                        {
-                            var v = value.Trim().Split(' ');
-                            Double.TryParse(v[0], out wnum);
+                        #region fraction to decimal
+                        //double wnum = 0.0;
+                        //double dnum = 0.0;
+                        //if (value.Trim().Contains(" "))
+                        //{
+                        //    var v = value.Trim().Split(' ');
+                        //    Double.TryParse(v[0], out wnum);
 
-                            if (v[1].Contains("/"))
-                            {
-                                dnum = GetDecimalValue(v[1]);
-                            }
-                        }
-                        else
-                        {
-                            if (value.Trim().Contains("/"))
-                            {
-                                dnum = GetDecimalValue(value);
-                            }
-                            else
-                            {
-                                Double.TryParse(value.Trim(), out wnum);
-                            }
-                        }
-                        newValue = ((wnum + dnum) * 25.4).ToString();
+                        //    if (v[1].Contains("/"))
+                        //    {
+                        //        dnum = GetDecimalValue(v[1]);
+                        //    }
+                        //}
+                        //else
+                        //{
+                        //    if (value.Trim().Contains("/"))
+                        //    {
+                        //        dnum = GetDecimalValue(value);
+                        //    }
+                        //    else
+                        //    {
+                        //        Double.TryParse(value.Trim(), out wnum);
+                        //    }
+                        //}
+                        //newValue = ((wnum + dnum) * 25.4).ToString();
+                        #endregion
+                        double convertedValue = 0;
+                        Double.TryParse(value, out convertedValue);
+                        newValue = (convertedValue * 25.4).ToString();
                     }
                     break;
                 case "integer":
