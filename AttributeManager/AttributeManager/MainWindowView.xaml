@@ -4,8 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AttributeManager"
-        xmlns:themecatalog="clr-namespace:AttributeManager.ThemeCatalog"
-        xmlns:attribsettings="clr-namespace:AttributeManager.AttribSettings"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" 
         x:Class="AttributeManager.MainWindowView"
@@ -14,21 +12,6 @@
         WindowStartupLocation="CenterScreen" 
         Style="{StaticResource WindowTextStyle}"
         local:ViewModelLocator.AutoViewModel="True" MouseDown="Window_MouseDown" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.IsSharedSizeScope="True">
-    <!--AllowsTransparency="True" WindowStyle="None"-->
-
-    <Window.Resources>
-        <DataTemplate DataType="{x:Type themecatalog:ThemeCatalogViewModel}">
-            <themecatalog:ThemeCatalogView/>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type attribsettings:AttribSettingsViewModel}">
-            <attribsettings:AttribSettingsView/>
-        </DataTemplate>
-    </Window.Resources>
-
-    <!--<Window.DataContext>
-        <local:MainViewModel/>
-    </Window.DataContext>-->
-
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <ei:CallMethodAction TargetObject="{Binding}" MethodName="LoadCurrentView"/>

@@ -89,10 +89,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AttribSettings\AttribSettingsView.xaml.cs">
-      <DependentUpon>AttribSettingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="AttribSettings\AttribSettingsViewModel.cs" />
     <Compile Include="BaseClass\DelegateCommand.cs" />
     <Compile Include="BaseClass\BindableBase.cs" />
     <Compile Include="BaseClass\ExcelReader.cs" />
@@ -101,47 +97,26 @@
     <Compile Include="MainWindowView.xaml.cs">
       <DependentUpon>MainWindowView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BaseClass\RelayCommand.cs" />
     <Compile Include="Models\AttributeModel.cs" />
     <Compile Include="Models\Component.cs" />
     <Compile Include="Models\UpdateConfigurationModel.cs" />
     <Compile Include="Models\VersionComparer.cs" />
-    <Compile Include="ThemeCatalog\ThemeCatalogView.xaml.cs">
-      <DependentUpon>ThemeCatalogView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ThemeCatalog\ThemeCatalogViewModel.cs" />
-    <Compile Include="BaseClass\ValidatableBindableBase.cs" />
     <Compile Include="BaseClass\ViewModelLocator.cs" />
     <Compile Include="UpdateSettingViewModel.cs" />
     <Compile Include="UpdateSettingView.xaml.cs">
       <DependentUpon>UpdateSettingView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Window1.xaml.cs">
-      <DependentUpon>Window1.xaml</DependentUpon>
-    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="AttribSettings\AttribSettingsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindowView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ThemeCatalog\ThemeCatalogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UpdateSettingView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Window1.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
