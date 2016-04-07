@@ -46,7 +46,7 @@ namespace AttributeManager.BaseClass
                 _itemSheets = _workSheets[i];
                 var worksSheetName = _itemSheets.Name;
 
-                if (worksSheetName.Equals("Legend")) continue;
+                if (worksSheetName.Equals("Legend") || worksSheetName.Equals("General")) continue;
 
                 List<string> data = new List<string>();
                 WorkBook.Range excelRange = _itemSheets.UsedRange;
@@ -67,7 +67,7 @@ namespace AttributeManager.BaseClass
                     {
                         var val = Convert.ToString(valueArray[row, col]);
 
-                        @out += val + ",";
+                        @out += $"{val},";
 
                     }
                     data.Add(@out.Trim(','));
@@ -113,7 +113,7 @@ namespace AttributeManager.BaseClass
 
         public List<AttributeModel> GetComponentDictionary()
         {
-            _itemSheets = (WorkBook.Worksheet)_workSheets.Item[2];
+            _itemSheets = (WorkBook.Worksheet)_workSheets.Item["Legend"];
             int legendRowHeader = 1;
             int row = legendRowHeader;
             var attributeDictionary = new List<AttributeModel>();
@@ -147,8 +147,7 @@ namespace AttributeManager.BaseClass
         public void ForceDispose()
         {
             _workBook.Close();
-
-
+            
             ReleaseObject(_itemSheets);
             ReleaseObject(_workSheets);
             ReleaseObject(_workBook);

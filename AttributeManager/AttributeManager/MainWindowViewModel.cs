@@ -155,6 +155,7 @@ namespace AttributeManager
                     }
                     
                 }
+                
 
                 ProgressVisible = Visibility.Collapsed;
                 MessageBox.Show("Attribute files created.");
@@ -309,7 +310,7 @@ namespace AttributeManager
                 default:
                     break;
             }
-            return attribute.Count <= 0 ? null : attribute[0];
+            return attribute.Count <= 0 ? null : attribute[0].Trim();
         }
 
         public string GetAttributeFormatType(string value, string paramType)

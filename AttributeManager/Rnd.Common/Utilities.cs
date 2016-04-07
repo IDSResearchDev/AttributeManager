@@ -499,7 +499,6 @@ namespace Rnd.Common
                     {
                         content[index] = $"{i[0]}{delimiter}{newValues[i[0]]}";
                         counter++;
-
                         if (counter >= newValues.Count)
                             break;
                     }
