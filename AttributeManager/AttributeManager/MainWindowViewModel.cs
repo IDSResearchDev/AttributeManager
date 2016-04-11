@@ -319,7 +319,16 @@ namespace AttributeManager
             switch (paramType)
             {
                 case "string":
-                    newValue = $"\"{value}\"";
+                    double d = 0.0;
+                    if(Double.TryParse(value, out d))
+                    {
+                        newValue = $"\"{d}\"";
+                    }
+                    else
+                    {
+                        newValue = $"\"{value}\"";
+                    }
+                    
                     break;
                 case "double":
                     if (String.IsNullOrEmpty(value))
