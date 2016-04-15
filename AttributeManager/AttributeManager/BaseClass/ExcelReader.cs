@@ -40,40 +40,46 @@ namespace AttributeManager.BaseClass
         {
             int SheetCount = _workSheets.Count;
             List<Component> components = new List<Component>();
-
-            for (int i = 1; i <= SheetCount; i++)
+            try
             {
-                _itemSheets = _workSheets[i];
-                var worksSheetName = _itemSheets.Name;
-
-                if (worksSheetName.Equals("Legend") || worksSheetName.Equals("General")) continue;
-
-                List<string> data = new List<string>();
-                WorkBook.Range excelRange = _itemSheets.UsedRange;
-
-                var rowCount = excelRange.Rows.Count;
-                var columnCount = excelRange.Columns.Count;
-
-
-                object[,] valueArray = (object[,])excelRange.get_Value(WorkBook.XlRangeValueDataType.xlRangeValueDefault);
-
-                for (int row = _rowStart; row <= rowCount; row++)
+                for (int i = 1; i <= SheetCount; i++)
                 {
-                    var str = Convert.ToString(valueArray[row, _columnStart]);
-                    if (string.IsNullOrEmpty(str) || string.IsNullOrWhiteSpace(str)) break;
+                    _itemSheets = _workSheets[i];
+                    var worksSheetName = _itemSheets.Name;
 
-                    var @out = "";
-                    for (int col = _columnStart; col < columnCount; col++)
+                    if (worksSheetName.Equals("Legend") || worksSheetName.Equals("General")) continue;
+
+                    List<string> data = new List<string>();
+                    WorkBook.Range excelRange = _itemSheets.UsedRange;
+
+                    var rowCount = excelRange.Rows.Count;
+                    var columnCount = excelRange.Columns.Count;
+
+
+                    object[,] valueArray = (object[,])excelRange.get_Value(WorkBook.XlRangeValueDataType.xlRangeValueDefault);
+
+                    for (int row = _rowStart; row <= rowCount; row++)
                     {
-                        var val = Convert.ToString(valueArray[row, col]);
+                        var str = Convert.ToString(valueArray[row, _columnStart]);
+                        if (string.IsNullOrEmpty(str) || string.IsNullOrWhiteSpace(str)) break;
 
-                        @out += $"{val},";
+                        var @out = "";
+                        for (int col = _columnStart; col < columnCount; col++)
+                        {
+                            var val = Convert.ToString(valueArray[row, col]);
 
+                            @out += $"{val},";
+
+                        }
+                        data.Add(@out.Trim(','));
                     }
-                    data.Add(@out.Trim(','));
-                }
 
-                components.AddRange(GetComponents(data, worksSheetName));
+                    components.AddRange(GetComponents(data, worksSheetName));
+                }
+            }
+            catch (Exception x)
+            {
+                throw x;
             }
 
             return components;
@@ -85,8 +91,8 @@ namespace AttributeManager.BaseClass
             int componentNumber = 0;
             int.TryParse(sheetName, out componentNumber);
 
-            if (componentNumber != 0)
-            {
+            if (componentNumber != 0 && data.Count > 0)
+            {                                
                 var attributes = data[0].Split(',');
                 for (int i = 1; i < data.Count; i++)
                 {
