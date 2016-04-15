@@ -436,7 +436,7 @@ namespace AttributeManager
             bool value = false;
             if (File.Exists(LocalUpdaterFile))
             {
-                var aiuFile = "attribute_manager_update.aiu";
+                var aiuFile = "connectioncreator_update.aiu";
                 var util = new Rnd.Common.Utilities();
                 var updatePath = Path.Combine(util.GetTextFileValue(LocalUpdaterFile, '=', "DownloadsFolder"), aiuFile);
                 if (File.Exists(updatePath))
@@ -460,7 +460,7 @@ namespace AttributeManager
                     MessageBox.Show($"Attribute Manager update file ({aiuFile}) doesn't exist.", "Update not found", MessageBoxButton.OK, MessageBoxImage.Information);
                     value = true;
                 }
-            }
+            }            
             return value;
         }
         #endregion
