@@ -11,7 +11,7 @@
         Title="Connection Creator (.j attribute creator)" Height="249.176" Width="692.067" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen" 
         Style="{StaticResource WindowTextStyle}"
-        local:ViewModelLocator.AutoViewModel="True" MouseDown="Window_MouseDown" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.IsSharedSizeScope="True">
+        local:ViewModelLocator.AutoViewModel="True" MouseDown="Window_MouseDown" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.IsSharedSizeScope="True" Icon="Images/app.ico">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <ei:CallMethodAction TargetObject="{Binding}" MethodName="LoadCurrentView"/>
