@@ -17,7 +17,7 @@
         Style="{StaticResource WindowTextStyle}"
         WindowStartupLocation="CenterScreen"
         local:ViewModelLocator.AutoViewModel="True"
-        mc:Ignorable="d">
+        mc:Ignorable="d" Icon="pack://siteoforigin:,,,/app.ico">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <ei:CallMethodAction MethodName="LoadCurrentView" TargetObject="{Binding}" />

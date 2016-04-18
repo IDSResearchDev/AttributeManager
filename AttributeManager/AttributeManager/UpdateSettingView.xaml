@@ -10,7 +10,7 @@
         ShowInTaskbar="False"
         Style="{StaticResource WindowTextStyle}"
         local:ViewModelLocator.AutoViewModel="True"
-        WindowStartupLocation="CenterOwner">
+        WindowStartupLocation="CenterOwner" Icon="pack://siteoforigin:,,,/app.ico">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*" />
