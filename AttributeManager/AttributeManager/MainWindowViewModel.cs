@@ -44,6 +44,11 @@ namespace ConnectionCreator
             //CurrentViewModel = _mainvViewModel;
         }
 
+        public string AppTitle
+        {
+            get { return $"Connection Creator (.j attribute creator) {AppVersion}"; }
+        }
+
         private Visibility _progressVisible = Visibility.Collapsed;
         public Visibility ProgressVisible
         {

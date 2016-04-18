@@ -6,7 +6,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:local="clr-namespace:ConnectionCreator"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        Title="Connection Creator (.j attribute creator)"
+        Title="{Binding AppTitle}"
         Width="692.067"
         Height="249.176"
         HorizontalContentAlignment="Center"

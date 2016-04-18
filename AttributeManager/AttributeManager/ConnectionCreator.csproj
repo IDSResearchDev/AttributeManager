@@ -179,9 +179,6 @@
     <None Include="Resources\standard.j188">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\updater.ini">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -224,6 +221,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\updater.bin">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="uninstall.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
