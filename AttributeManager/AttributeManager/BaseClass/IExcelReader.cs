@@ -1,11 +1,11 @@
-﻿using AttributeManager.Models;
+﻿using ConnectionCreator.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AttributeManager.BaseClass
+namespace ConnectionCreator.BaseClass
 {
     public interface IExcelReader
     {

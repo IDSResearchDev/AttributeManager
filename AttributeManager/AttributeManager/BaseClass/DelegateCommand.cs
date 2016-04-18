@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Windows.Input;
 
-namespace AttributeManager.BaseClass
+namespace ConnectionCreator.BaseClass
 {
     public class DelegateCommand : ICommand
     {

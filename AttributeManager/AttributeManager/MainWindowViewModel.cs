@@ -1,9 +1,9 @@
 ﻿using System;
-using AttributeManager.BaseClass;
+using ConnectionCreator.BaseClass;
 using System.Windows.Input;
 using System.Windows;
 using Forms = System.Windows.Forms;
-using AttributeManager.Models;
+using ConnectionCreator.Models;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,11 +12,11 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-namespace AttributeManager
+namespace ConnectionCreator
 {
     public class MainWindowViewModel : BindableBase, IDataErrorInfo
     {
-        public static string LocalAppFolder = Path.Combine(new Utilities().LocalAppData, "AttributeManager");
+        public static string LocalAppFolder = Path.Combine(new Utilities().LocalAppData, "ConnectionCreator");
         public static string LocalUpdaterFile = Path.Combine(LocalAppFolder, "updater.ini");
         public static string AppVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
         public static MainWindowView _view;

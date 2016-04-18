@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AttributeManager.Models
+namespace ConnectionCreator.Models
 {
     public static class VersionComparer
     {

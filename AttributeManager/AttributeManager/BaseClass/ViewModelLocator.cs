@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 
 
-namespace AttributeManager
+namespace ConnectionCreator
 {
     public static class ViewModelLocator
     {

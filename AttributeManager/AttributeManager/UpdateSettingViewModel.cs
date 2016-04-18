@@ -1,4 +1,4 @@
-﻿using AttributeManager.BaseClass;
+﻿using ConnectionCreator.BaseClass;
 using Common = Rnd.Common;
 using System;
 using System.Collections.Generic;
@@ -10,15 +10,15 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Diagnostics;
-using AttributeManager.Models;
+using ConnectionCreator.Models;
 using System.Windows;
 
-namespace AttributeManager
+namespace ConnectionCreator
 {
     public class UpdateSettingViewModel : BindableBase, IDataErrorInfo
     {
         public static UpdateConfigurationModel UpdateConfigModel;
-        public static string LocalAppFolder = Path.Combine(new Common.Utilities().LocalAppData, "AttributeManager");
+        public static string LocalAppFolder = Path.Combine(new Common.Utilities().LocalAppData, "ConnectionCreator");
         public static string LocalUpdateConfigurationFile = Path.Combine(LocalAppFolder, "updater.bin");
         public static string LocalUpdaterFile = Path.Combine(LocalAppFolder, "updater.ini");
 
