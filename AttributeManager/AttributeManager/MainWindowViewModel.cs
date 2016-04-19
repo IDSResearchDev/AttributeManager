@@ -16,7 +16,7 @@ namespace ConnectionCreator
 {
     public class MainWindowViewModel : BindableBase, IDataErrorInfo
     {
-        public static string LocalAppFolder = Path.Combine(new Utilities().LocalAppData, "ConnectionCreator");
+        public static string LocalAppFolder = Path.Combine(new Utilities().LocalAppData, System.Reflection.Assembly.GetExecutingAssembly().GetName().Name);
         public static string LocalUpdaterFile = Path.Combine(LocalAppFolder, "updater.ini");
         public static string AppVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
         public static MainWindowView _view;

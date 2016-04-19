@@ -18,11 +18,12 @@ namespace ConnectionCreator
     public class UpdateSettingViewModel : BindableBase, IDataErrorInfo
     {
         public static UpdateConfigurationModel UpdateConfigModel;
-        public static string LocalAppFolder = Path.Combine(new Common.Utilities().LocalAppData, "ConnectionCreator");
+        public static string LocalAppFolder = Path.Combine(new Common.Utilities().LocalAppData, System.Reflection.Assembly.GetExecutingAssembly().GetName().Name);
         public static string LocalUpdateConfigurationFile = Path.Combine(LocalAppFolder, "updater.bin");
         public static string LocalUpdaterFile = Path.Combine(LocalAppFolder, "updater.ini");
+        public static string updateTextFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name.ToLower()}_update.txt";
 
-        private Common.Utilities _utilities;
+        private Common.Utilities _utilities;            
 
         public UpdateSettingViewModel()
         {
@@ -166,8 +167,7 @@ namespace ConnectionCreator
 
                 string updaterFilePath = LocalUpdaterFile;//AppDomain.CurrentDomain.BaseDirectory + @"updater.ini";
                 string attribute = "url";
-                char delimiter = '=';
-                string updateTextFile = "package_tool_update.txt";
+                char delimiter = '=';                
 
                 /// --- 
                 string protocol = "http://";
