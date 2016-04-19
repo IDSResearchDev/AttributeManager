@@ -443,6 +443,7 @@ namespace ConnectionCreator
             {
                 var aiuFile = "connectioncreator_update.aiu";
                 var util = new Rnd.Common.Utilities();
+                CheckForUpdate = "Check for Update";
                 var updatePath = Path.Combine(util.GetTextFileValue(LocalUpdaterFile, '=', "DownloadsFolder"), aiuFile);
                 if (File.Exists(updatePath))
                 {
@@ -451,8 +452,7 @@ namespace ConnectionCreator
                     if (VersionComparer.IsUptoDate(updateVersion, AppVersion))
                     {
                         value = true;
-                        GetUpdate = string.Empty;
-                        CheckForUpdate = "Check for Update";
+                        GetUpdate = string.Empty;                        
                     }
                     else
                     {
@@ -462,7 +462,7 @@ namespace ConnectionCreator
                 }
                 else
                 {
-                    MessageBox.Show($"Attribute Manager update file ({aiuFile}) doesn't exist.", "Update not found", MessageBoxButton.OK, MessageBoxImage.Information);
+                    //MessageBox.Show($"Attribute Manager update file ({aiuFile}) doesn't exist.", "Update not found", MessageBoxButton.OK, MessageBoxImage.Information);
                     value = true;
                 }
             }            
