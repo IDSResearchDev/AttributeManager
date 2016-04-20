@@ -156,26 +156,10 @@
         <Border Grid.Row="2"
                 BorderBrush="{StaticResource NormalBorderBrush}"
                 BorderThickness="0,1,0,0">
-            <Grid Margin="20,0,20,0">
-                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                    <Button Width="85"
-                            Height="25"
-                            Margin="5,10,5,10"
-                            Command="{Binding Create}"
-                            Content="Create"
-                            FontSize="12"
-                            Style="{StaticResource PrimaryButton}" />
-                    <Button Width="85"
-                            Height="25"
-                            Margin="5,10,5,10"
-                            Command="{Binding Exit}"
-                            Content="Close"
-                            FontSize="12"
-                            Style="{StaticResource PrimaryButton}" />
-                </StackPanel>
+            <Grid Margin="10,0,20,0">
                 <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
                     <TextBlock Name="TxtGetUpdate"
-                               Margin="5,10,5,10"
+                               Margin="5,10,5,5"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Center"
                                Text="{Binding GetUpdate}" />
@@ -201,6 +185,23 @@
                             Style="{x:Null}"
                             TextBlock.Foreground="#FF0774B2" />
                 </StackPanel>
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <Button Width="85"
+                            Height="25"
+                            Margin="5,10,5,10"
+                            Command="{Binding Create}"
+                            Content="Create"
+                            FontSize="12"
+                            Style="{StaticResource PrimaryButton}" />
+                    <Button Width="85"
+                            Height="25"
+                            Margin="5,10,5,10"
+                            Command="{Binding Exit}"
+                            Content="Close"
+                            FontSize="12"
+                            Style="{StaticResource PrimaryButton}" />
+                </StackPanel>
+                
             </Grid>
         </Border>
     </Grid>
