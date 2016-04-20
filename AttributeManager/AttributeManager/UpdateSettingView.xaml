@@ -6,11 +6,12 @@
         Title="Update Setting"
         Width="480"
         Height="240"
+        Icon="pack://siteoforigin:,,,/app.ico"
         ResizeMode="NoResize"
         ShowInTaskbar="False"
         Style="{StaticResource WindowTextStyle}"
-        local:ViewModelLocator.AutoViewModel="True"
-        WindowStartupLocation="CenterOwner" Icon="pack://siteoforigin:,,,/app.ico">
+        WindowStartupLocation="CenterOwner"
+        local:ViewModelLocator.AutoViewModel="True">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*" />
