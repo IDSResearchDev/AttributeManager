@@ -137,7 +137,7 @@ namespace ConnectionCreator.BaseClass
                 {
                     AttributeModel attribute = new AttributeModel
                     {
-                        AttridbuteId = Convert.ToString(_itemSheets.Range[$"{legendColumns[0]}{row.ToString()}", Missing.Value].Value2),
+                        AttributeId = Convert.ToString(_itemSheets.Range[$"{legendColumns[0]}{row.ToString()}", Missing.Value].Value2),
                         ParameterType = Convert.ToString(_itemSheets.Range[$"{legendColumns[1]}{row.ToString()}", Missing.Value].Value2),
                         Tab = Convert.ToString(_itemSheets.Range[$"{legendColumns[2]}{row.ToString()}", Missing.Value].Value2),
                         AttributeName = Convert.ToString(_itemSheets.Range[$"{legendColumns[3]}{row.ToString()}", Missing.Value].Value2)

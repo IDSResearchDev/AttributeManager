@@ -306,13 +306,31 @@ namespace ConnectionCreator
                 });
             }
         }
+
+        public ICommand Help
+        {
+            get
+            {
+                return new DelegateCommand(() =>
+                {
+                    string appDir = AppDomain.CurrentDomain.BaseDirectory;
+                    string fileName = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name.ToLower()}_Help.pdf";
+                    if (!File.Exists(appDir + @fileName))
+                    {
+                        MessageBox.Show(this.GetCurrentWindow(), "Help file doesn't exist.", "Help file not found", MessageBoxButton.OK, MessageBoxImage.Information);
+                        return;
+                    }
+                    Process.Start(appDir + @fileName);
+                });
+            }
+        }
         #endregion
 
         #region Misc
 
         public string GetAttribute(string attributeName, int property)
         {
-            var attribute = componentDictionary.Where(p => p.AttributeName == attributeName).Select(p => p.AttridbuteId).ToList();
+            var attribute = componentDictionary.Where(p => p.AttributeName == attributeName).Select(p => p.AttributeId).ToList();
             switch (property)
             {
                 case 2:
@@ -441,7 +459,7 @@ namespace ConnectionCreator
             bool value = false;
             if (File.Exists(LocalUpdaterFile))
             {
-                var aiuFile = "connectioncreator_update.aiu";
+                var aiuFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}_update.aiu";
                 var util = new Rnd.Common.Utilities();
                 CheckForUpdate = "Check for Update";
                 var updatePath = Path.Combine(util.GetTextFileValue(LocalUpdaterFile, '=', "DownloadsFolder"), aiuFile);

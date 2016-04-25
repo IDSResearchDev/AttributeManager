@@ -8,7 +8,7 @@ namespace ConnectionCreator.Models
 {
     public class AttributeModel
     {
-        public string AttridbuteId { get; set; }
+        public string AttributeId { get; set; }
         public string AttributeName { get; set; }
         public string Tab { get; set; }
         public string ParameterType { get; set; }
