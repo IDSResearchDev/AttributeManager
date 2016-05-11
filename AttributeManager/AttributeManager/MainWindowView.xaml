@@ -82,7 +82,7 @@
                        FontSize="12"
                        FontWeight="SemiBold"
                        Padding="0,0,2,0"
-                       Text="Default attribute:" />
+                       Text="Excel template:" />
             <TextBox Name="TxtDefaultAttribute"
                      Grid.Row="2"
                      Grid.Column="2"
@@ -181,6 +181,17 @@
                             BorderThickness="0"
                             Command="{Binding Help}"
                             Content="Help"
+                            IsTabStop="False"
+                            Style="{x:Null}"
+                            TextBlock.Foreground="#FF0774B2" />
+                    <Button Name="BtnTemplate"
+                            Margin="5,10,5,10"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Command="{Binding OpenTemplate}"
+                            Content="Open Template"
                             IsTabStop="False"
                             Style="{x:Null}"
                             TextBlock.Foreground="#FF0774B2" />

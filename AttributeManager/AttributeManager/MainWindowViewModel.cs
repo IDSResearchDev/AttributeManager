@@ -324,6 +324,28 @@ namespace ConnectionCreator
                 });
             }
         }
+
+        public ICommand OpenTemplate
+        {
+            get
+            {
+                return new DelegateCommand(() =>
+                {
+                    string appDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Resources");
+                    string fileName = $"ComponentTemplate.xls";
+                    string sourceFile = Path.Combine(appDir, @fileName);
+                    string destinationFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), @fileName);
+                    if (!File.Exists(sourceFile))
+                    {
+                        MessageBox.Show(this.GetCurrentWindow(), "Template doesn't exist.", "Template file not found", MessageBoxButton.OK, MessageBoxImage.Information);
+                        return;
+                    }
+                    if(!File.Exists(destinationFile))
+                        File.Copy(sourceFile, destinationFile);
+                    Process.Start(destinationFile);
+                });
+            }
+        }
         #endregion
 
         #region Misc
