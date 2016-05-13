@@ -101,6 +101,7 @@
     <Compile Include="BaseClass\ExcelReader.cs" />
     <Compile Include="BaseClass\IExcelReader.cs" />
     <Compile Include="BaseClass\ViewModelLocator.cs" />
+    <Compile Include="MachineValidator.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="MainWindowView.xaml.cs">
       <DependentUpon>MainWindowView.xaml</DependentUpon>

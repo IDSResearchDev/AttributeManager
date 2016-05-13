@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
@@ -528,6 +529,35 @@ namespace Rnd.Common
                 }                
             }
             return value;
+        }
+
+        public string GetPhysicalAddress()
+        {
+            var networks = NetworkInterface.GetAllNetworkInterfaces();
+            var activeNetworks = networks.Where(ni => ni.OperationalStatus == OperationalStatus.Up && ni.NetworkInterfaceType == NetworkInterfaceType.Ethernet);
+            var nonVirtual = activeNetworks.Where(s => !s.Description.Contains("Virtual") && !s.Name.Contains("vEthernet"));
+            return nonVirtual.First().GetPhysicalAddress().ToString();
+            #region getphysical
+            //var result = string.Empty;
+            //NetworkInterface[] interfaces = NetworkInterface.GetAllNetworkInterfaces();
+            //foreach (NetworkInterface adapter in interfaces)
+            //{
+            //    PhysicalAddress address = adapter.GetPhysicalAddress();
+            //    byte[] bytes = address.GetAddressBytes();
+            //    if (bytes.Length == 0 || adapter.NetworkInterfaceType != NetworkInterfaceType.Ethernet) continue;
+
+            //    var mac = new StringBuilder();
+            //    for (int i = 0; i < bytes.Length; i++)
+            //    {
+            //        mac.Append(bytes[i].ToString("X2"));
+            //        if (i != bytes.Length - 1) mac.Append("-");
+            //    }
+
+            //    result = mac.ToString();
+            //    break;
+            //}
+            //return result;
+            #endregion
         }
     }
 }
