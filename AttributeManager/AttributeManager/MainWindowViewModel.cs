@@ -314,7 +314,7 @@ namespace ConnectionCreator
                 return new DelegateCommand(() =>
                 {
                     string appDir = AppDomain.CurrentDomain.BaseDirectory;
-                    string fileName = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name.ToLower()}_Help.pdf";
+                    string fileName = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}_Help.pdf";
                     if (!File.Exists(appDir + @fileName))
                     {
                         MessageBox.Show(this.GetCurrentWindow(), "Help file doesn't exist.", "Help file not found", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -510,5 +510,4 @@ namespace ConnectionCreator
         }
         #endregion
     }
-
 }

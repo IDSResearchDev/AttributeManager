@@ -14,7 +14,10 @@ namespace ConnectionCreator
         static string localAppFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), System.Reflection.Assembly.GetExecutingAssembly().GetName().Name);
         static string activationFilePath = Path.Combine(localAppFolder, "activation.bin");
         static string appFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.exe");
-        static string apptivatorFilePath = @"C:\Users\J. Mon\Documents\apptivator\Apptivator\Apptivator\bin\Debug\Apptivator.exe"; //Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Apptivator.exe");  
+        
+
+        static string apptivatorFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Apptivator", "Apptivator.exe");
+        //@"C:\Users\J. Mon\Documents\apptivator\Apptivator\Apptivator\bin\Debug\Apptivator.exe"; //Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Apptivator.exe");  
         static string spaceSaver = "%20%";
 
         public static void Run()
