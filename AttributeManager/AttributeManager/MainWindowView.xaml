@@ -11,13 +11,14 @@
         Height="249.176"
         HorizontalContentAlignment="Center"
         VerticalContentAlignment="Center"
+        local:ViewModelLocator.AutoViewModel="True"
         Grid.IsSharedSizeScope="True"
+        Icon="pack://siteoforigin:,,,/app.ico"
         MouseDown="Window_MouseDown"
         ResizeMode="NoResize"
         Style="{StaticResource WindowTextStyle}"
         WindowStartupLocation="CenterScreen"
-        local:ViewModelLocator.AutoViewModel="True"
-        mc:Ignorable="d" Icon="pack://siteoforigin:,,,/app.ico">
+        mc:Ignorable="d">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <ei:CallMethodAction MethodName="LoadCurrentView" TargetObject="{Binding}" />
@@ -132,6 +133,13 @@
                     CommandParameter="outputdir"
                     Content=". . ." />
 
+            <TextBlock Grid.Row="4"
+                       Grid.Column="2"
+                       Margin="5,0"
+                       FontSize="10"
+                       FontStyle="Italic"
+                       Text="(ex. X:\IDS_Model\Beauce Atlas, Inc\15830_PTB_BeauceAtlas_TS21.0SR1USImp\attributes)" />
+
 
             <TextBlock Grid.Row="5"
                        Grid.Column="1"
@@ -160,55 +168,55 @@
                 <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
                     <TextBlock Name="TxtGetUpdate"
                                Margin="5,10,5,5"
-                               FontSize="11.5"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Center"
+                               FontSize="11.5"
                                Text="{Binding GetUpdate}" />
                     <Button Name="BtnCheckUpdate"
                             Margin="0,10,5,10"
-                            FontSize="11.5"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Background="Transparent"
                             BorderThickness="0"
                             Command="{Binding CheckUpdate}"
                             Content="{Binding CheckForUpdate}"
+                            FontSize="11.5"
                             IsTabStop="False"
                             Style="{x:Null}"
                             TextBlock.Foreground="#FF0774B2" />
-                    <TextBlock Text="|"
-                               Margin="0,10,0,10"
-                               Foreground="Gray"
+                    <TextBlock Margin="0,10,0,10"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Center"
-                               Background="Transparent"/>
+                               Background="Transparent"
+                               Foreground="Gray"
+                               Text="|" />
                     <Button Name="BtnHelp"
                             Margin="5,10,5,10"
-                            FontSize="11.5"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Background="Transparent"
                             BorderThickness="0"
                             Command="{Binding Help}"
                             Content="Help"
+                            FontSize="11.5"
                             IsTabStop="False"
                             Style="{x:Null}"
                             TextBlock.Foreground="#FF0774B2" />
-                    <TextBlock Text="|"
-                               Margin="0,10,0,10"
-                               Foreground="Gray"
+                    <TextBlock Margin="0,10,0,10"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Center"
-                               Background="Transparent"/>
+                               Background="Transparent"
+                               Foreground="Gray"
+                               Text="|" />
                     <Button Name="BtnTemplate"
                             Margin="5,10,5,10"
-                            FontSize="11.5"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Background="Transparent"
                             BorderThickness="0"
                             Command="{Binding OpenTemplate}"
                             Content="Get template"
+                            FontSize="11.5"
                             IsTabStop="False"
                             Style="{x:Null}"
                             TextBlock.Foreground="#FF0774B2" />
