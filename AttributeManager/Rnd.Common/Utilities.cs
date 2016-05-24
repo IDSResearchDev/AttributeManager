@@ -536,7 +536,8 @@ namespace Rnd.Common
             var networks = NetworkInterface.GetAllNetworkInterfaces();
             var activeNetworks = networks.Where(ni => ni.OperationalStatus == OperationalStatus.Up && ni.NetworkInterfaceType == NetworkInterfaceType.Ethernet);
             var nonVirtual = activeNetworks.Where(s => !s.Description.Contains("Virtual") && !s.Name.Contains("vEthernet"));
-            return nonVirtual.First().GetPhysicalAddress().ToString();
+            return nonVirtual.FirstOrDefault().GetPhysicalAddress().ToString();
+
             #region getphysical
             //var result = string.Empty;
             //NetworkInterface[] interfaces = NetworkInterface.GetAllNetworkInterfaces();
