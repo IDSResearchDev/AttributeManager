@@ -16,7 +16,8 @@ namespace ConnectionCreator
         static string appFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.exe");
         
 
-        static string apptivatorFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Apptivator", "Apptivator.exe");
+        static string apptivatorFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), @"IDS Inc\Apptivator", "Apptivator.exe");
+                                            //Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Apptivator", "Apptivator.exe");
         //@"C:\Users\J. Mon\Documents\apptivator\Apptivator\Apptivator\bin\Debug\Apptivator.exe"; //Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Apptivator.exe");  
         static string spaceSaver = "%20%";
 
@@ -29,7 +30,7 @@ namespace ConnectionCreator
                 {
                     Process p = new Process();
                     p.StartInfo.FileName = apptivatorFilePath;
-                    p.StartInfo.Arguments = $"{activationFilePath.Replace(" ", spaceSaver)} {appFilePath.Replace(" ", spaceSaver)} {spaceSaver}";
+                    p.StartInfo.Arguments = $"{activationFilePath.Replace(" ", spaceSaver)} {appFilePath.Replace(" ", spaceSaver)} {spaceSaver}";                    
                     p.Start();
                 }
                 else
