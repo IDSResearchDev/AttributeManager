@@ -66,7 +66,7 @@ namespace Rnd.Common
         /// <returns>
         ///     returns object which is a dialog result and string full folder path of selected file.
         /// </returns>
-        public Tuple<DialogResult,string> FileDialog(string title)
+        public Tuple<DialogResult, string> FileDialog(string title)
         {
             var fileDialog = new OpenFileDialog();
 
@@ -83,7 +83,7 @@ namespace Rnd.Common
 
             fileDialog.ReadOnlyChecked = true;
             fileDialog.ShowReadOnly = true;
-            
+
             return new Tuple<DialogResult, string>(fileDialog.ShowDialog(), fileDialog.FileName.ToString());
         }
 
@@ -98,7 +98,7 @@ namespace Rnd.Common
             fileDialog.CheckPathExists = true;
 
             //fileDialog.DefaultExt = "txt";
-            fileDialog.Filter = $"{filename} (*.{fileextension.Replace(".","")})|*.{fileextension.Replace(".", "")}";
+            fileDialog.Filter = $"{filename} (*.{fileextension.Replace(".", "")})|*.{fileextension.Replace(".", "")}";
             //fileDialog.FilterIndex = 2;
             fileDialog.RestoreDirectory = true;
 
@@ -117,7 +117,7 @@ namespace Rnd.Common
         public XDocument XdocReadXml(string path)
         {
             var newdoc = XDocument.Load(path);
-            return newdoc; 
+            return newdoc;
 
         }
         /// <summary>
@@ -137,12 +137,12 @@ namespace Rnd.Common
         /// <returns>Returns innertext of XML element in string value.</returns>
         public string GetSingleXElementXml(string path, string searchXElementName)
         {
-            var value = string.Empty; 
+            var value = string.Empty;
             if (CheckIfFileExists(path))
             {
                 var xmldoc = XdocReadXml(path);
                 var rootxml = GetRootElement(xmldoc);
-                
+
                 foreach (var elements in rootxml.Elements())
                 {
                     foreach (var content in elements.Elements().Where(content => content.Name == searchXElementName))
@@ -158,9 +158,9 @@ namespace Rnd.Common
         /// </summary>
         /// <param name="textfile">The full path of the text file</param>
         /// <param name="value">Text value to write</param>
-        public void WriteText(string textfile,string value)
+        public void WriteText(string textfile, string value)
         {
-            
+
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Rnd.Common
         /// </summary>
         /// <param name="dir"></param>
         public void CreateDirectory(string dir)
-        {            
+        {
             if (!CheckIfDirectoryExists(dir))
                 Directory.CreateDirectory(dir);
         }
@@ -236,20 +236,20 @@ namespace Rnd.Common
         public bool CheckIfFileExists(string pathfilename)
         {
             return (File.Exists(pathfilename));
-        }        
+        }
         /// <summary>
         /// Create any type of file in a given location
         /// </summary>
         /// <param name="path">The location where the file will be created</param>
         /// <param name="filename"></param>
         /// <param name="extension">The kind of file to be create e.g. .ini, .txt, .doc)</param>
-        public void CreateFile(string path,string filename, string extension)
+        public void CreateFile(string path, string filename, string extension)
         {
             var ext = extension;
             if (extension[0] != '.') extension = string.Concat(".", ext);
 
-            File.Create(Path.Combine(path,filename+extension)).Close();
-        }        
+            File.Create(Path.Combine(path, filename + extension)).Close();
+        }
         /// <summary>
         /// Initialize new instance of StreamWriter and StreamReader of a specified file.
         /// Read lines of a file and append the value on top most line on the given params.
@@ -278,7 +278,7 @@ namespace Rnd.Common
 
             }
             File.Copy(tempfile, filename, true);
-            
+
         }
         /// <summary>
         /// Get the location of appdata folder
@@ -300,16 +300,16 @@ namespace Rnd.Common
         /// <param name="filename"></param>
         /// <returns></returns>
         public string[] ReadAllLines(string filename)
-        {            
-            if(CheckIfFileExists(filename))
+        {
+            if (CheckIfFileExists(filename))
             {
-                return File.ReadAllLines(filename);                                
+                return File.ReadAllLines(filename);
             }
             else
             {
                 return null;
             }
-            
+
         }
 
         /// <summary>
@@ -324,20 +324,20 @@ namespace Rnd.Common
             string computerName = string.Empty, serverName = string.Empty, system = string.Empty;
             if (temp != null)
             {
-                foreach(string x in temp)
-                {                   
-                    if(x.Contains("tcpip:"))
+                foreach (string x in temp)
+                {
+                    if (x.Contains("tcpip:"))
                     {
                         var n = x.Replace("tcpip:", string.Empty).Split(',');
-                        computerName = n[0]+";";
+                        computerName = n[0] + ";";
                     }
                     if (x.Contains("_1238.db"))
                     {
                         var str = x.Split('\\');
                         system = str[2] == "system32" ? "32" : "64";
-                        var n = str[str.Length - 1].Replace("tcpip_",string.Empty).Replace("_1238.db",string.Empty);                        
-                        serverName = n+";";
-                    }                    
+                        var n = str[str.Length - 1].Replace("tcpip_", string.Empty).Replace("_1238.db", string.Empty);
+                        serverName = n + ";";
+                    }
                 }
             }
             return computerName + serverName + system;
@@ -353,7 +353,7 @@ namespace Rnd.Common
             using (StreamWriter sw = File.CreateText(filename))
             {
                 sw.Write(text);
-            }  
+            }
         }
 
         /// <summary>
@@ -370,7 +370,7 @@ namespace Rnd.Common
             string multiUserTemplate = "tcpip:{0},{1}\nC:\\Windows\\{2}\\TeklaStructuresServer\\tcpip_{3}_{4}.db\nThis is a multiuser model.\nThis model should not be opened with single user mode!";
 
             CreateFileWithText(filename, string.Format(multiUserTemplate, computerName, port, targetArch == "32" ? "system32" : "SysWOW64", serverName, port));
-        }        
+        }
 
         /// <summary>
         /// Check if the model is a Multi-User
@@ -470,7 +470,7 @@ namespace Rnd.Common
             var content = this.ReadAllLines(filePath);
             int index = 0;
 
-            if(content != null)
+            if (content != null)
             {
                 foreach (var item in content)
                 {
@@ -505,8 +505,8 @@ namespace Rnd.Common
                     }
                     index++;
                 }
-                File.WriteAllLines(filePath, content); 
-                
+                File.WriteAllLines(filePath, content);
+
 
             }
         }
@@ -526,7 +526,7 @@ namespace Rnd.Common
                         value = i[1].Trim();
                         break;
                     }
-                }                
+                }
             }
             return value;
         }
@@ -535,30 +535,31 @@ namespace Rnd.Common
         {
             var networks = NetworkInterface.GetAllNetworkInterfaces();
             var activeNetworks = networks.Where(ni => ni.OperationalStatus == OperationalStatus.Up && ni.NetworkInterfaceType == NetworkInterfaceType.Ethernet);
-            var nonVirtual = activeNetworks.Where(s => !s.Description.Contains("Virtual") && !s.Name.Contains("vEthernet"));
-            return nonVirtual.FirstOrDefault().GetPhysicalAddress().ToString();
-
-            #region getphysical
-            //var result = string.Empty;
-            //NetworkInterface[] interfaces = NetworkInterface.GetAllNetworkInterfaces();
-            //foreach (NetworkInterface adapter in interfaces)
-            //{
-            //    PhysicalAddress address = adapter.GetPhysicalAddress();
-            //    byte[] bytes = address.GetAddressBytes();
-            //    if (bytes.Length == 0 || adapter.NetworkInterfaceType != NetworkInterfaceType.Ethernet) continue;
-
-            //    var mac = new StringBuilder();
-            //    for (int i = 0; i < bytes.Length; i++)
-            //    {
-            //        mac.Append(bytes[i].ToString("X2"));
-            //        if (i != bytes.Length - 1) mac.Append("-");
-            //    }
-
-            //    result = mac.ToString();
-            //    break;
-            //}
-            //return result;
-            #endregion
+            //var nonVirtual = activeNetworks.Where(s => /*!s.Description.Contains("Virtual") &&*/ !s.Name.Contains("vEthernet"));
+            return activeNetworks.FirstOrDefault().GetPhysicalAddress().ToString();
+           
         }
+        #region getphysical
+        //var result = string.Empty;
+        //NetworkInterface[] interfaces = NetworkInterface.GetAllNetworkInterfaces();
+        //foreach (NetworkInterface adapter in interfaces)
+        //{
+        //    PhysicalAddress address = adapter.GetPhysicalAddress();
+        //    byte[] bytes = address.GetAddressBytes();
+        //    if (bytes.Length == 0 || adapter.NetworkInterfaceType != NetworkInterfaceType.Ethernet) continue;
+
+        //    var mac = new StringBuilder();
+        //    for (int i = 0; i < bytes.Length; i++)
+        //    {
+        //        mac.Append(bytes[i].ToString("X2"));
+        //        if (i != bytes.Length - 1) mac.Append("-");
+        //    }
+
+        //    result = mac.ToString();
+        //    break;
+        //}
+        //return result;
+        #endregion
     }
+
 }
