@@ -534,11 +534,13 @@ namespace Rnd.Common
         public string GetPhysicalAddress()
         {
             var networks = NetworkInterface.GetAllNetworkInterfaces();
-            var activeNetworks = networks.Where(ni => ni.OperationalStatus == OperationalStatus.Up && ni.NetworkInterfaceType == NetworkInterfaceType.Ethernet);
+            var activeNetworks = networks.Where(ni => ni.NetworkInterfaceType == NetworkInterfaceType.Ethernet
+                                                    || ni.NetworkInterfaceType == NetworkInterfaceType.Wireless80211);
             //var nonVirtual = activeNetworks.Where(s => /*!s.Description.Contains("Virtual") &&*/ !s.Name.Contains("vEthernet"));
-            return activeNetworks.FirstOrDefault().GetPhysicalAddress().ToString();
-           
+            return activeNetworks.FirstOrDefault()?.GetPhysicalAddress().ToString();
+            
         }
+
         #region getphysical
         //var result = string.Empty;
         //NetworkInterface[] interfaces = NetworkInterface.GetAllNetworkInterfaces();
