@@ -488,6 +488,13 @@ namespace Rnd.Common
 
         public void UpdateTextFileValues(string filePath, char delimiter, Dictionary<string, string> newValues)
         {
+            //    File.SetAttributes(filePath, FileAttributes.ReadOnly | FileAttributes.Hidden);
+            ////    File.SetAttributes(filePath, FileAttributes.Normal);
+            //FileInfo f = new FileInfo(filePath);
+            //f.IsReadOnly = false;
+            //f.IsReadOnly = true;
+
+
             var content = this.ReadAllLines(filePath);
             int index = 0, counter = 0;
             var contentCopy = content;
@@ -506,9 +513,15 @@ namespace Rnd.Common
                     index++;
                 }
                 File.WriteAllLines(filePath, content);
-
-
+                
             }
+
+        }
+
+        public void IsReadOnly(string filepath, bool SetIsReadOnly)
+        {
+            FileInfo fileinfo = new FileInfo(filepath);
+            fileinfo.IsReadOnly = SetIsReadOnly;
         }
 
         public string GetTextFileValue(string filePath, char delimiter, string attribute)
@@ -537,7 +550,7 @@ namespace Rnd.Common
             var activeNetworks = networks.Where(ni => ni.NetworkInterfaceType == NetworkInterfaceType.Ethernet
                                                     || ni.NetworkInterfaceType == NetworkInterfaceType.Wireless80211);
             //var nonVirtual = activeNetworks.Where(s => /*!s.Description.Contains("Virtual") &&*/ !s.Name.Contains("vEthernet"));
-            return activeNetworks.FirstOrDefault()?.GetPhysicalAddress().ToString();
+            return activeNetworks.First().GetPhysicalAddress().ToString();
             
         }
 

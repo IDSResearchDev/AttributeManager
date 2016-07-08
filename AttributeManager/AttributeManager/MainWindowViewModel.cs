@@ -159,6 +159,7 @@ namespace ConnectionCreator
                                 }
                             }
                             _utilities.UpdateTextFileValues(filePath: filePath, delimiter: ' ', newValues: attributes);
+                            _utilities.IsReadOnly(filePath, true);
                         }
 
                     }
