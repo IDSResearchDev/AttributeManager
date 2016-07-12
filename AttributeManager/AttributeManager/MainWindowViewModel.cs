@@ -140,6 +140,7 @@ namespace ConnectionCreator
                         {
                             var jfile = File.ReadAllText(standardFile);
                             var filePath = Path.Combine(OutputDirectory, $"{component.Size}.j{component.ComponentNumber}");
+                            _utilities.IsReadOnly(filePath, false);
                             _utilities.CreateFileWithText(filePath, jfile);
 
 
