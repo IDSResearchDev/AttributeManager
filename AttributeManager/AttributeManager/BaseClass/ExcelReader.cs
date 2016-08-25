@@ -61,7 +61,7 @@ namespace ConnectionCreator.BaseClass
                     for (int row = _rowStart; row <= rowCount; row++)
                     {
                         var str = Convert.ToString(valueArray[row, _columnStart]);
-                        if (string.IsNullOrEmpty(str) || string.IsNullOrWhiteSpace(str)) break;
+                        if (string.IsNullOrEmpty(str) || string.IsNullOrWhiteSpace(str)) continue;
 
                         var @out = "";
                         for (int col = _columnStart; col < columnCount; col++)
