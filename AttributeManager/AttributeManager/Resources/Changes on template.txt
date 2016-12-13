@@ -1,0 +1,2 @@
+> Changes on Shear Plates 
+	- Flange Gap (Sec) "et" -> Plate Gap (Pri) "dv"
