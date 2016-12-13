@@ -59,5 +59,14 @@ namespace ConnectionCreator.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to http://idsftpserver.com/rd/update/ConnectionCreator/.
+        /// </summary>
+        internal static string ServerPath {
+            get {
+                return ResourceManager.GetString("ServerPath", resourceCulture);
+            }
+        }
     }
 }

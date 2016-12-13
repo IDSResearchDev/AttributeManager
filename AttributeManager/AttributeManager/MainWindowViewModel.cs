@@ -20,6 +20,8 @@ namespace ConnectionCreator
         public static string LocalUpdaterFile = Path.Combine(LocalAppFolder, "updater.ini");
         public static string AppVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
         public static MainWindowView _view;
+        private static string fileName = $"ComponentTemplate.xls";
+        string destinationFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), @fileName);
 
         private Utilities _utilities;
         List<AttributeModel> componentDictionary;
@@ -49,6 +51,17 @@ namespace ConnectionCreator
             get { return $"Connection Creator (.j attribute creator) {AppVersion}"; }
         }
 
+        public Cursor _cursorState = Cursors.Arrow;
+        public Cursor CursorState
+        {
+            get { return _cursorState; }
+            set
+            {
+                SetProperty(ref _cursorState, value);
+
+            }
+        }        
+
         private Visibility _progressVisible = Visibility.Collapsed;
         public Visibility ProgressVisible
         {
@@ -56,6 +69,17 @@ namespace ConnectionCreator
             set
             {
                 SetProperty(ref _progressVisible, value);
+
+            }
+        }
+
+        private string _loadingStatus = "Creating files";
+        public string LoadingStatus
+        {
+            get { return _loadingStatus; }
+            set
+            {
+                SetProperty(ref _loadingStatus, value);
 
             }
         }
@@ -123,6 +147,7 @@ namespace ConnectionCreator
             {
                 await Task.Run(() =>
                 {
+                    LoadingStatus = "Creating files";
                     ProgressVisible = Visibility.Visible;
                     IExcelReader reader = new ExcelReader(DefaultAttributeDirectory);
                     //var components = reader.GetComponents();
@@ -299,20 +324,11 @@ namespace ConnectionCreator
                     }
                     if (File.Exists(LocalUpdaterFile))
                     {
-                        if (CheckLatestUpdate())
-                        {
-                            UpdateSettingView update = new UpdateSettingView();
-                            update.Owner = this.GetCurrentWindow();
-                            update.ShowDialog();
-                        }
-                        else
-                        {
-                            Process.Start(updater);
-                        }
+                        Process.Start(updater);
                     }
                 });
             }
-        }
+        }        
 
         public ICommand Help
         {
@@ -336,26 +352,66 @@ namespace ConnectionCreator
         {
             get
             {
-                return new DelegateCommand(() =>
+                return new DelegateCommand(async () =>
                 {
-                    string appDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Resources");
-                    string fileName = $"ComponentTemplate.xls";
-                    string sourceFile = Path.Combine(appDir, @fileName);
-                    string destinationFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), @fileName);
-                    if (!File.Exists(sourceFile))
-                    {
-                        MessageBox.Show(this.GetCurrentWindow(), "Template doesn't exist.", "Template file not found", MessageBoxButton.OK, MessageBoxImage.Information);
-                        return;
-                    }
-                    if(!File.Exists(destinationFile))
-                        File.Copy(sourceFile, destinationFile);
-                    Process.Start(destinationFile);
+                    LoadingStatus = "Downloading";
+                    CursorState = Cursors.Wait;
+                    ProgressVisible = Visibility.Visible;
+                    await DownloadFileFromServer(fileName, destinationFile);
+                    
+                    
                 });
             }
         }
+
+        private async Task DownloadFileFromServer(string fileName, string destinationFile)
+        {
+            await Task.Run(() =>
+            {
+                using (System.Net.WebClient client = new System.Net.WebClient())
+                {
+                    var serverPath = new Uri($"{ConnectionCreator.Properties.Resources.ServerPath}/{fileName}");
+                    client.DownloadFileAsync(serverPath, destinationFile);
+                    client.DownloadFileCompleted += new AsyncCompletedEventHandler(downloader_DownloadFileCompleted);
+                }
+            });
+        }
+
+        private void downloader_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
+        {
+            ProgressVisible = Visibility.Collapsed;
+            CursorState = Cursors.Arrow;
+            if (e.Error != null)
+            {
+                _view.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    MessageBox.Show(this.GetCurrentWindow(), e.Error.Message, "Error fetching template", MessageBoxButton.OK, MessageBoxImage.Information);
+                }));
+            }
+            else
+            {                
+                Process.Start(destinationFile);
+            }
+        }
+
+        public ICommand ViewUpdateSetting
+        {
+            get
+            {
+                return new DelegateCommand(() =>
+                {
+                    UpdateSettingView update = new UpdateSettingView();
+                    update.Owner = this.GetCurrentWindow();
+                    update.ShowDialog();
+                });
+            }
+        }
+
         #endregion
 
         #region Misc
+
+
 
         public string GetAttribute(string attributeName, int property)
         {

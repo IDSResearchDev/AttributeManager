@@ -18,6 +18,7 @@
         ResizeMode="NoResize"
         Style="{StaticResource WindowTextStyle}"
         WindowStartupLocation="CenterScreen"
+        Cursor="{Binding CursorState}"
         mc:Ignorable="d">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -25,7 +26,6 @@
         </i:EventTrigger>
 
     </i:Interaction.Triggers>
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -150,7 +150,7 @@
                        FontSize="12"
                        FontWeight="SemiBold"
                        Padding="0,0,2,0"
-                       Text="Creating files"
+                       Text="{Binding LoadingStatus}"
                        Visibility="{Binding ProgressVisible}" />
             <ProgressBar Grid.Row="5"
                          Grid.Column="2"
@@ -167,7 +167,7 @@
             <Grid Margin="10,0,20,0">
                 <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
                     <TextBlock Name="TxtGetUpdate"
-                               Margin="5,10,5,5"
+                               Margin="5,10,5,10"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Center"
                                FontSize="11.5"
@@ -184,30 +184,6 @@
                             IsTabStop="False"
                             Style="{x:Null}"
                             TextBlock.Foreground="#FF0774B2" />
-                    <TextBlock Margin="0,10,0,10"
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Center"
-                               Background="Transparent"
-                               Foreground="Gray"
-                               Text="|" />
-                    <Button Name="BtnHelp"
-                            Margin="5,10,5,10"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Background="Transparent"
-                            BorderThickness="0"
-                            Command="{Binding Help}"
-                            Content="Help"
-                            FontSize="11.5"
-                            IsTabStop="False"
-                            Style="{x:Null}"
-                            TextBlock.Foreground="#FF0774B2" />
-                    <TextBlock Margin="0,10,0,10"
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Center"
-                               Background="Transparent"
-                               Foreground="Gray"
-                               Text="|" />
                     <Button Name="BtnTemplate"
                             Margin="5,10,5,10"
                             HorizontalAlignment="Left"
@@ -220,6 +196,31 @@
                             IsTabStop="False"
                             Style="{x:Null}"
                             TextBlock.Foreground="#FF0774B2" />
+                    <Button Name="BtnSettings"
+                            Margin="5,10,5,10"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Command="{Binding ViewUpdateSetting}"
+                            Content="Settings"
+                            FontSize="11.5"
+                            IsTabStop="False"
+                            Style="{x:Null}"
+                            TextBlock.Foreground="#FF0774B2" />
+                    <Button Name="BtnHelp"
+                            Margin="5,10,5,10"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Command="{Binding Help}"
+                            Content="Help"
+                            FontSize="11.5"
+                            IsTabStop="False"
+                            Style="{x:Null}"
+                            TextBlock.Foreground="#FF0774B2" />
+
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                     <Button Width="85"
@@ -241,5 +242,4 @@
             </Grid>
         </Border>
     </Grid>
-
 </Window>

@@ -33,7 +33,9 @@ namespace ConnectionCreator
             CanValidate = false;
             if (UpdateConfigModel != null)
             {
-                RNDServer = UpdateConfigModel.RNDServer;
+                RNDServer = string.IsNullOrEmpty(UpdateConfigModel.RNDServer)
+                    ? ConnectionCreator.Properties.Resources.ServerPath
+                    : UpdateConfigModel.RNDServer;
                 FTPServer = UpdateConfigModel.FTPServer;
                 IsRNDServer = UpdateConfigModel.IsRndServer;
                 IsFTPServer = UpdateConfigModel.IsFtpServer;
@@ -129,6 +131,7 @@ namespace ConnectionCreator
 
                     string updater = Path.Combine(LocalAppFolder, @"updater.exe");
 
+                    RNDServer = ConnectionCreator.Properties.Resources.ServerPath;
                     Server = IsRNDServer ? RNDServer : FTPServer;
                     if (String.IsNullOrEmpty(this.Server)) return;
 
@@ -145,7 +148,7 @@ namespace ConnectionCreator
                         };
 
                         util.SerializeBinFile(LocalUpdateConfigurationFile, UpdateConfigModel);
-                        Process.Start(updater);
+                        //Process.Start(updater);
                         this.Close();
                     }
                 });
@@ -180,6 +183,9 @@ namespace ConnectionCreator
                     protocol = "ftp://";
                     Server = Server.Replace("/", "");
                     host = System.Net.Dns.GetHostEntry(Server);
+
+                    // format: \\{host.HostName}\Dropbox\Update\{app}_update.txt
+                    // ex. \\ORT070\Dropbox\Update\connection_creator_update.txt
 
                     string updateTextFilePath = System.IO.Path.Combine(@"\\" + host.HostName + "\\Dropbox\\Update", updateTextFile);
                     string exeFile = util.GetTextFileValue(updateTextFilePath, delimiter, "ServerFileName");
