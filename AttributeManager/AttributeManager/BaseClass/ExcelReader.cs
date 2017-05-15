@@ -88,8 +88,13 @@ namespace ConnectionCreator.BaseClass
         public List<Component> GetComponents(List<string> data, string sheetName)
         {
             List<Component> components = new List<Component>();
+
+            var split = sheetName.Split('_');
             int componentNumber = 0;
-            int.TryParse(sheetName, out componentNumber);
+            int.TryParse(split[0], out componentNumber);
+
+            
+            var angleType = (sheetName.Contains("_")) ? string.Concat("_",split[1]) : "";
 
             if (componentNumber != 0 && data.Count > 0)
             {                                
@@ -100,7 +105,7 @@ namespace ConnectionCreator.BaseClass
 
                     Component component = new Component();
                     component.ComponentNumber = componentNumber;
-                    component.Size = values[0];
+                    component.Size = $"{values[0]}{angleType}";//string.Concat(values[0],doubleangle);
 
                     if (string.IsNullOrEmpty(component.Size) || string.IsNullOrWhiteSpace(component.Size)) continue;
                     
